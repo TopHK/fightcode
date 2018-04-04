@@ -14,7 +14,7 @@ int x=[](){
 class Solution
 {
 public:
-    string longestCommonPrefix(vector<string>& strs)
+    string longestCommonPrefix_v1(vector<string>& strs)
     {
         string prefix;
         int strSize = strs.size();
@@ -47,6 +47,32 @@ public:
         }
         return prefix;
     }
+
+    string longestCommonPrefix(vector<string>& strs)
+    {
+        string prefix;
+        int strSize = strs.size();
+        if(strSize == 0) return prefix;
+        if(strSize == 1) return strs[0];
+
+        string firstStr = strs[0];
+        bool hit = true;
+        for(int i = 0, j = 0; i < firstStr.size(); ++i)
+        {
+            hit = true;
+            for(j = 0; j < strSize; ++j)
+            {
+                if(strs[j][i] != firstStr[i])
+                {
+                    hit = false;
+                    break;
+                }
+            }
+            if(hit) prefix += firstStr[i];
+            else break;
+        }
+        return prefix;
+    }
 };
 
 
@@ -54,7 +80,7 @@ int main()
 {
     Solution solution;
     vector<string> strs = {
-        "aca", "cab"
+        "aca", "aab"
     };
     cout<<solution.longestCommonPrefix(strs)<<endl;
     return 0;
