@@ -14,7 +14,7 @@ int x=[](){
 class Solution
 {
 public:
-    int repeatedStringMatch(string A, string B)
+    int repeatedStringMatch_v1(string A, string B)
     {
         int count = 0;
         string As = A;
@@ -22,6 +22,22 @@ public:
         {
             if(As.find(B) != string::npos) return i;
             As += A;
+        }
+        return -1;
+    }
+
+    int repeatedStringMatch(string A, string B)
+    {
+        int count = 0;
+        int sizeA = A.size();
+        int sizeB = B.size();
+        for(int i = 0,j = 0; i < sizeA; ++i)
+        {
+            for(j = 0; j < sizeB; ++j)
+            {
+                if(A[(i + j) % sizeA] != B[j]) break;
+            }
+            if(j == sizeB) return (i + j) / sizeA + ((i+j) % sizeA == 0 ? 0 : 1);
         }
         return -1;
     }
