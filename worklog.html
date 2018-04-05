@@ -172,6 +172,16 @@ Error message and password prompt
 
 <li>459. Repeated Substring Pattern</li>
 
+<li>539. Minimum Time Difference</li>
+
+<li>553. Optimal Division</li>
+
+<li>583. Delete Operation for Two Strings</li>
+
+<li>609. Find Duplicate File in System</li>
+
+<li>647. Palindromic Substrings</li>
+
 <li>686. Repeated String Match</li>
 
 <li>696. Count Binary Substrings</li>
@@ -186,11 +196,15 @@ Error message and password prompt
 
 <li>Array</li>
 
+<li>DP</li>
+
 <li>Find the number of repeated subarray in an array</li>
 
 <li>KMP</li>
 
 <li>Longest Prefix Suffix</li>
+
+<li>Math</li>
 
 <li>Number of Distinct Subarrays</li>
 
@@ -8517,7 +8531,7 @@ Error message and password prompt
 <div created="20180404105409827" modified="20180404105409827" title="$:/state/toc/TableOfContents/String-KMP-497309061">
 <pre>open</pre>
 </div>
-<div list="[[28. Implement strStr()]] KMP [[686. Repeated String Match]] TableOfContents [[Longest Prefix Suffix]] [[459. Repeated Substring Pattern]] String" title="$:/StoryList">
+<div list="[[583. Delete Operation for Two Strings]] DP [[539. Minimum Time Difference]] [[609. Find Duplicate File in System]] [[647. Palindromic Substrings]] [[553. Optimal Division]] Math TableOfContents" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180115115326558" modified="20180115115326558" title="$:/temp/advancedsearch">
@@ -8859,6 +8873,382 @@ Explanation: It's the substring &quot;abc&quot; four times. (And the substring &
     }
 ```
 </pre>
+</div>
+<div created="20180405104949141" modified="20180405105112384" tags="String" title="539. Minimum Time Difference">
+<pre>!! Question
+
+
+```
+Given a list of 24-hour clock time points in &quot;Hour:Minutes&quot; format, find the minimum minutes difference between any two time points in the list.
+Example 1:
+Input: [&quot;23:59&quot;,&quot;00:00&quot;]
+Output: 1
+Note:
+The number of time points in the given list is at least 2 and won't exceed 20000.
+The input time is legal and ranges from 00:00 to 23:59.
+```
+
+!! Solution:
+
+
+```
+    int to_min(string&amp; a)
+    {
+        int h = (a[0]-'0')*10+(a[1]-'0'), m = (a[3]-'0')*10+(a[4]-'0');
+        return 60*h+m;
+    }
+    int findMinDifference(vector&lt;string&gt;&amp; timePoints)
+    {
+        int n = timePoints.size();
+        if (n &gt; 1440) return 0;
+        vector&lt;int&gt; times;
+        for (int i = 0; i &lt; n; i++)
+            times.push_back(to_min(timePoints[i]));
+        sort(times.begin(), times.end());
+        int ans = times[0]+60*24-times.back();
+        for (int i = 1; i &lt; n; ++i) {
+            ans = min(ans, times[i]-times[i-1]);
+        }
+        return ans;
+    }
+```
+
+</pre>
+</div>
+<div created="20180405064807471" modified="20180405065017502" tags="Math" title="553. Optimal Division">
+<pre>!! Question
+
+Given a list of positive integers, the adjacent integers will perform the float division. For example, [2,3,4] -&gt; 2 / 3 / 4.
+
+However, you can add any number of parenthesis at any position to change the priority of operations. You should find out how to add parenthesis to get the maximum result, and return the corresponding expression in string format. Your expression should NOT contain redundant parenthesis.
+
+
+```
+Example:
+Input: [1000,100,10,2]
+Output: &quot;1000/(100/10/2)&quot;
+Explanation:
+1000/(100/10/2) = 1000/((100/10)/2) = 200
+However, the bold parenthesis in &quot;1000/((100/10)/2)&quot; are redundant, 
+since they don't influence the operation priority. So you should return &quot;1000/(100/10/2)&quot;. 
+
+Other cases:
+1000/(100/10)/2 = 50
+1000/(100/(10/2)) = 50
+1000/100/10/2 = 0.5
+1000/100/(10/2) = 2
+Note:
+
+The length of the input array is [1, 10].
+Elements in the given array will be in range [2, 1000].
+There is only one optimal division for each test case.
+```
+
+!! Solution
+
+
+```
+    string optimalDivision(vector&lt;int&gt;&amp; nums)
+    {
+        string expression;
+        int sizeOfNum = nums.size();
+        expression += to_string(nums[0]);
+        if(sizeOfNum == 1) return expression;
+        expression += &quot;/&quot;;
+        if(sizeOfNum == 2) return expression + to_string(nums[1]);
+
+        expression += &quot;(&quot;;
+        for(int i = 1; i &lt; sizeOfNum; ++i)
+        {
+            if(i != 1) expression += &quot;/&quot;;
+            expression += to_string(nums[i]);
+        }
+        expression += &quot;)&quot;;
+        return expression;
+    }
+```
+
+`Math Thought`
+
+X1/X2/X3/…/Xn will always be equal to ''(X1/X2) * Y'', no matter how you place parentheses. 
+
+i.e no matter how you place parentheses, X1 always goes to the numerator and X2 always goes to the denominator. 
+
+Hence you just need to maximize Y. And Y is maximized when it is equal to X3 *…*Xn. 
+
+So the answer is always ''X1/(X2/X3/…/Xn) = (X1 *X3 *…*Xn)/X2''</pre>
+</div>
+<div created="20180405112648044" modified="20180405112731235" tags="DP" title="583. Delete Operation for Two Strings">
+<pre>!! Question
+
+
+```
+Given two words word1 and word2, find the minimum number of steps required to make word1 and word2 the same, where in each step you can delete one character in either string.
+
+Example 1:
+Input: &quot;sea&quot;, &quot;eat&quot;
+Output: 2
+Explanation: You need one step to make &quot;sea&quot; to &quot;ea&quot; and another step to make &quot;eat&quot; to &quot;ea&quot;.
+Note:
+The length of given words won't exceed 500.
+Characters in given words can only be lower-case letters.
+```
+
+!! Solution
+
+
+```
+    int minDistance(string word1, string word2)
+    {
+        int size1 = word1.size();
+        int size2 = word2.size();
+        vector&lt;vector&lt;int&gt;&gt; DP(size1+1, vector&lt;int&gt;(size2+1, 0));
+
+        for(int i = 0; i &lt;= size1; ++i)
+        {
+            for(int j = 0; j &lt;= size2; ++j)
+            {
+                if(i == 0) DP[0][j] = j;
+                else if(j == 0) DP[i][0] = i;
+                else if(word1[i-1] == word2[j-1]) DP[i][j] = DP[i-1][j-1];
+                else DP[i][j] = min(DP[i][j-1] + 1, DP[i-1][j] + 1);
+            }
+        }
+        return DP[size1][size2];
+    }
+```
+
+</pre>
+</div>
+<div created="20180405090500225" modified="20180405091802259" tags="String" title="609. Find Duplicate File in System">
+<pre>!! Question
+
+
+```
+Given a list of directory info including directory path, and all the files with contents in this directory, you need to find out all the groups of duplicate files in the file system in terms of their paths.
+
+A group of duplicate files consists of at least two files that have exactly the same content.
+
+A single directory info string in the input list has the following format:
+
+&quot;root/d1/d2/.../dm f1.txt(f1_content) f2.txt(f2_content) ... fn.txt(fn_content)&quot;
+
+It means there are n files (f1.txt, f2.txt ... fn.txt with content f1_content, f2_content ... fn_content, respectively) in directory root/d1/d2/.../dm. Note that n &gt;= 1 and m &gt;= 0. If m = 0, it means the directory is just the root directory.
+
+The output is a list of group of duplicate file paths. For each group, it contains all the file paths of the files that have the same content. A file path is a string that has the following format:
+
+&quot;directory_path/file_name.txt&quot;
+
+Example 1:
+Input:
+[&quot;root/a 1.txt(abcd) 2.txt(efgh)&quot;, &quot;root/c 3.txt(abcd)&quot;, &quot;root/c/d 4.txt(efgh)&quot;, &quot;root 4.txt(efgh)&quot;]
+Output:  
+[[&quot;root/a/2.txt&quot;,&quot;root/c/d/4.txt&quot;,&quot;root/4.txt&quot;],[&quot;root/a/1.txt&quot;,&quot;root/c/3.txt&quot;]]
+Note:
+No order is required for the final output.
+You may assume the directory name, file name and file content only has letters and digits, and the length of file content is in the range of [1,50].
+The number of files given is in the range of [1,20000].
+You may assume no files or directories share the same name in the same directory.
+You may assume each given directory info represents a unique directory. Directory path and file info are separated by a single blank space.
+Follow-up beyond contest:
+Imagine you are given a real file system, how will you search files? DFS or BFS?
+If the file content is very large (GB level), how will you modify your solution?
+If you can only read the file by 1kb each time, how will you modify your solution?
+What is the time complexity of your modified solution? What is the most time-consuming part and memory consuming part of it? How to optimize?
+How to make sure the duplicated files you find are not false positive?
+```
+
+!! Solution 1: my solution ,use sort
+
+```
+struct file
+{
+    string directory;
+    string fileName;
+    string fileContent;
+    file(string dir, string name, string content): directory(dir), fileName(name), fileContent(content){}
+};
+
+bool myCompare(const file &amp;x, const file &amp;y)
+{
+    return x.fileContent &lt; y.fileContent;
+}
+
+class Solution
+{
+public:
+    vector&lt;vector&lt;string&gt;&gt; findDuplicate(vector&lt;string&gt;&amp; paths)
+    {
+        vector&lt;file&gt; fileSystem;
+        vector&lt;vector&lt;string&gt;&gt; result;
+
+        // step 1: parse each path into file structure
+        for(int i = 0; i &lt; paths.size(); ++i)
+        {
+            string path = paths[i];
+            string directory;
+            int leftPos = -1;
+            int rightPos = 0;
+
+            while(rightPos != -1)
+            {
+                rightPos = path.find(' ', leftPos+1);
+                string tempStr, fileName, fileContent;
+                if(rightPos != string::npos) tempStr = path.substr(leftPos+1, rightPos-leftPos-1);
+                else tempStr = path.substr(leftPos+1);
+
+                if(directory.empty())
+                {
+                    directory = tempStr;
+                    leftPos = rightPos;
+                    continue;
+                }
+
+                int leftBracket = tempStr.find('(');
+                fileName = tempStr.substr(0, leftBracket);
+                int rightBracket = tempStr.find(')');
+                fileContent = tempStr.substr(leftBracket+1, rightBracket-leftBracket-1);
+                fileSystem.push_back(file(directory, fileName, fileContent));
+                leftPos = rightPos;
+            }
+        }
+
+        // sort by file content
+        sort(fileSystem.begin(), fileSystem.end(), myCompare);
+
+        // compare to see if file content between the adjacent file structure
+        vector&lt;string&gt; oneGroup;
+        for(int i = 0; i &lt; fileSystem.size(); ++i)
+        {
+            string filePath = fileSystem[i].directory + '/' + fileSystem[i].fileName;
+            if(i == 0) oneGroup.push_back(filePath);
+            else
+            {
+                if(fileSystem[i].fileContent == fileSystem[i-1].fileContent)
+                {
+                    oneGroup.push_back(filePath);
+                }
+                else
+                {
+                    if(oneGroup.size() &gt; 1) result.push_back(oneGroup);
+                    oneGroup.clear();
+                    oneGroup.push_back(filePath);
+                }
+            }
+            if(i == fileSystem.size()-1 &amp;&amp; oneGroup.size() &gt; 1) result.push_back(oneGroup);
+        }
+        return result;
+    }
+};
+```
+
+!! Solution 2: use unordered_map+stringstream
+
+
+```
+vector&lt;vector&lt;string&gt;&gt; findDuplicate(vector&lt;string&gt;&amp; paths) {
+    unordered_map&lt;string, vector&lt;string&gt;&gt; files;
+    vector&lt;vector&lt;string&gt;&gt; result;
+
+    for (auto path : paths) {
+	    stringstream ss(path);
+	    string root;
+	    string s;
+	    getline(ss, root, ' ');
+	    while (getline(ss, s, ' ')) {
+		    string fileName = root + '/' + s.substr(0, s.find('('));
+		    string fileContent = s.substr(s.find('(') + 1, s.find(')') - s.find('(') - 1);
+		    files[fileContent].push_back(fileName);
+	    }
+    }
+
+    for (auto file : files) {
+	    if (file.second.size() &gt; 1)
+		    result.push_back(file.second);
+    }
+
+    return result;
+}
+```
+
+!! Follow up questions
+!!! 1. Imagine you are given a real file system, how will you search files? DFS or BFS ?
+In general, BFS will use more memory then DFS. However BFS can take advantage of the locality of files in inside directories, and therefore will probably be faster
+
+!!! 2. If the file content is very large (GB level), how will you modify your solution?
+In a real life solution we will not hash the entire file content, since it’s not practical. Instead we will first map all the files according to size. Files with different sizes are guaranteed to be different. We will than hash a small part of the files with equal sizes (using MD5 for example). Only if the md5 is the same, we will compare the files byte by byte
+
+!!! 3. If you can only read the file by 1kb each time, how will you modify your solution?
+This won’t change the solution. We can create the hash from the 1kb chunks, and then read the entire file if a full byte by byte comparison is required.
+
+!!! What is the time complexity of your modified solution? What is the most time consuming part and memory consuming part of it? How to optimize?
+Time complexity is O(n^2 * k) since in worse case we might need to compare every file to all others. k is the file size
+
+!!! How to make sure the duplicated files you find are not false positive?
+We will use several filters to compare: File size, Hash and byte by byte comparisons.</pre>
+</div>
+<div created="20180405072604786" modified="20180405072735596" tags="String" title="647. Palindromic Substrings">
+<pre>!! Question
+
+Given a string, your task is to count how many palindromic substrings in this string.
+
+The substrings with different start indexes or end indexes are counted as different substrings even they consist of same characters.
+
+
+```
+Example 1:
+Input: &quot;abc&quot;
+Output: 3
+Explanation: Three palindromic strings: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;.
+Example 2:
+Input: &quot;aaa&quot;
+Output: 6
+Explanation: Six palindromic strings: &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;aa&quot;, &quot;aa&quot;, &quot;aaa&quot;.
+Note:
+The input string length won't exceed 1000.
+```
+
+!! Solution
+
+
+```
+    int countPalindrom(string &amp;s, int left, int right)
+    {
+        int totalCount = 0;
+        while(left &gt;= 0 &amp;&amp; right &lt; s.size() &amp;&amp; s[left--] == s[right++])
+            totalCount++;
+        return totalCount;
+    }
+
+    int countSubstrings(string s)
+    {
+        int size = s.size();
+        int count = 0;
+        for(int i = 0; i &lt; size; ++i)
+        {
+            count += countPalindrom(s, i, i);
+            count += countPalindrom(s, i, i+1);
+        }
+        return count;
+    }
+```
+
+A very easy explanation with an example
+
+Lets take a string “aabaa”
+
+Step 1: Start a for loop to point at every single character from where we will trace the palindrome string.
+
+
+```
+checkPalindrome(s,i,i); //To check the palindrome of odd length palindromic sub-string
+checkPalindrome(s,i,i+1); //To check the palindrome of even length palindromic sub-string
+```
+
+
+Step 2: From each character of the string, we will keep checking if the sub-string is a palindrome and increment the palindrome count. 
+
+To check the palindrome, keep checking the left and right of the character if it is same or not.</pre>
 </div>
 <div created="20180404065721024" modified="20180404070116863" tags="String" title="686. Repeated String Match">
 <pre>!! Question
@@ -9417,6 +9807,9 @@ i:(9) &gt;&gt;&gt; left:(8), right:(9), res:(32)
 <div created="20180126095409841" modified="20180324025340453" tags="TableOfContents array" title="Array">
 <pre></pre>
 </div>
+<div created="20180405112635852" modified="20180405112646804" tags="TableOfContents" title="DP">
+<pre></pre>
+</div>
 <div created="20180324025323374" modified="20180324025535313" tags="Array" title="Find the number of repeated subarray in an array">
 <pre>!!! Question
 
@@ -9558,6 +9951,9 @@ int KMP(char *str, int slen, char *ptr, int plen)
 }
 ```
 </pre>
+</div>
+<div created="20180405064754784" modified="20180405064805767" tags="TableOfContents" title="Math">
+<pre></pre>
 </div>
 <div created="20180324031719886" modified="20180324031826484" tags="Array" title="Number of Distinct Subarrays">
 <pre>!!! Question
