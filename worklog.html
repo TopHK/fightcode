@@ -146,6 +146,8 @@ Error message and password prompt
 
 <li>$:/state/toc/TableOfContents-Array-497309061</li>
 
+<li>$:/state/toc/TableOfContents-Math-497309061</li>
+
 <li>$:/state/toc/TableOfContents-String-497309061</li>
 
 <li>$:/state/toc/TableOfContents/String-KMP-497309061</li>
@@ -168,19 +170,37 @@ Error message and password prompt
 
 <li>162. Find Peak Element</li>
 
+<li>17. Letter Combinations of a Phone Number</li>
+
+<li>227. Basic Calculator II</li>
+
 <li>28. Implement strStr()</li>
 
+<li>385. Mini Parser</li>
+
+<li>43. Multiply Strings</li>
+
 <li>459. Repeated Substring Pattern</li>
+
+<li>49. Group Anagrams</li>
+
+<li>522. Longest Uncommon Subsequence II</li>
 
 <li>539. Minimum Time Difference</li>
 
 <li>553. Optimal Division</li>
 
+<li>556. Next Greater Element III</li>
+
 <li>583. Delete Operation for Two Strings</li>
+
+<li>6. ZigZag Conversion</li>
 
 <li>609. Find Duplicate File in System</li>
 
 <li>647. Palindromic Substrings</li>
+
+<li>678. Valid Parenthesis String</li>
 
 <li>686. Repeated String Match</li>
 
@@ -190,11 +210,19 @@ Error message and password prompt
 
 <li>75. Sort Colors</li>
 
+<li>767. Reorganize String</li>
+
 <li>788. Rotated Digits</li>
 
 <li>795. Number of Subarrays with Bounded Maximum</li>
 
+<li>809. Expressive Words</li>
+
+<li>93. Restore IP Addresses</li>
+
 <li>Array</li>
+
+<li>DFS</li>
 
 <li>DP</li>
 
@@ -207,6 +235,8 @@ Error message and password prompt
 <li>Math</li>
 
 <li>Number of Distinct Subarrays</li>
+
+<li>stack</li>
 
 <li>String</li>
 
@@ -8525,13 +8555,16 @@ Error message and password prompt
 <div created="20180326024851026" modified="20180329060805065" title="$:/state/toc/TableOfContents-Array-497309061">
 <pre>close</pre>
 </div>
-<div created="20180402022411092" modified="20180402022411092" title="$:/state/toc/TableOfContents-String-497309061">
+<div created="20180406020150761" modified="20180406080339477" title="$:/state/toc/TableOfContents-Math-497309061">
 <pre>open</pre>
+</div>
+<div created="20180402022411092" modified="20180406080337765" title="$:/state/toc/TableOfContents-String-497309061">
+<pre>close</pre>
 </div>
 <div created="20180404105409827" modified="20180404105409827" title="$:/state/toc/TableOfContents/String-KMP-497309061">
 <pre>open</pre>
 </div>
-<div list="[[583. Delete Operation for Two Strings]] DP [[539. Minimum Time Difference]] [[609. Find Duplicate File in System]] [[647. Palindromic Substrings]] [[553. Optimal Division]] Math TableOfContents" title="$:/StoryList">
+<div list="[[6. ZigZag Conversion]] [[43. Multiply Strings]] DFS [[93. Restore IP Addresses]] [[556. Next Greater Element III]] [[678. Valid Parenthesis String]] [[227. Basic Calculator II]] [[385. Mini Parser]] stack [[522. Longest Uncommon Subsequence II]] [[809. Expressive Words]] [[767. Reorganize String]] [[17. Letter Combinations of a Phone Number]] [[49. Group Anagrams]] TableOfContents" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180115115326558" modified="20180115115326558" title="$:/temp/advancedsearch">
@@ -8747,6 +8780,176 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 ''Solution is same with 153 Find Minimum in Rotated Sorted Array''</pre>
 </div>
+<div created="20180406022657858" modified="20180406022748841" tags="String" title="17. Letter Combinations of a Phone Number">
+<pre>!! Question
+
+```
+Given a digit string, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+
+
+
+Input:Digit string &quot;23&quot;
+Output: [&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+```
+
+!! Solution: iterative
+
+```
+    vector&lt;string&gt; letterCombinations(string digits)
+    {
+        const vector&lt;string&gt; dict = {&quot;&quot;, &quot;&quot;, &quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot;, &quot;mno&quot;, &quot;pqrs&quot;, &quot;tuv&quot;, &quot;wxyz&quot;};
+        vector&lt;string&gt; results;
+        if(digits.empty() || digits == &quot;1&quot;) return results;
+        results.push_back(&quot;&quot;);
+        for(const auto&amp; digit : digits)
+        {
+            string candidates = dict[digit-'0'];
+            if(candidates.empty()) continue;
+
+            vector&lt;string&gt; tempResults;
+            for(const auto&amp; candidate : candidates)
+            {
+                for(const auto&amp; result : results)
+                {
+                    tempResults.push_back(result + candidate);
+                }
+            }
+            results.swap(tempResults);
+        }
+        return results;
+    }
+```
+
+</pre>
+</div>
+<div created="20180406063240715" modified="20180406063801092" tags="String" title="227. Basic Calculator II">
+<pre>!! Question
+
+
+```
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains only non-negative integers, +, -, *, / operators and empty spaces . The integer division should truncate toward zero.
+
+You may assume that the given expression is always valid.
+
+Some examples:
+&quot;3+2*2&quot; = 7
+&quot; 3/2 &quot; = 1
+&quot; 3+5 / 2 &quot; = 5
+Note: Do not use the eval built-in library function.
+
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+```
+
+!! Solution: two stack
+
+
+```
+class Solution {
+public:
+    int calculate(string s) {
+       stack&lt;char&gt; opS;
+       stack&lt;int&gt;  numS;
+       s.push_back(')'); // to make sure the last operand will be saved in the stack e.g. 1+2*3), 2*3 will be calculated and push in the stack
+       opS.push('+'); // sign for the first operand
+       
+       int i, curNum, len = s.size(), res =0;
+       for(i=0,curNum=0; i&lt;len; ++i)
+       {
+           if(isdigit(s[i])) curNum = curNum*10 + s[i] -'0'; // digit, recover the oprand
+           else if(isspace(s[i])) continue; // skip the space
+           else
+           {
+               switch(opS.top())
+               { 
+                   case '*': // if the last operator is * / , do calculation
+                   case '/':
+                        curNum = opS.top()=='/'?numS.top()/curNum : numS.top()*curNum;
+                        opS.pop();
+                        numS.pop();
+               }
+                numS.push(curNum); 
+                curNum = 0;
+                opS.push(s[i]);
+           }
+       }
+       opS.pop(); // skip the &quot;)&quot;
+       while(!opS.empty()) {res += (opS.top()=='-')? -numS.top(): numS.top(); opS.pop(); numS.pop();}
+       return res;
+    }
+};
+```
+
+!! Thought
+
+Use two stacks : one to save operators, one to save oprands. Every time, if we get a digit, then update curNum, if we get an operator, then it means we get a complete oprand, which is saved in curNum; if the last operator is * or /, then calculate it, otherwise, just save curNum and s[i] (new operator) in the stacks. At last, the opS stack has only “+” &amp; “-”, which are the sign of the corresponding operands saved in numS. Then we do sum to get the result.
+
+!! Another Case
+
+
+
+```
+class Solution {
+public:
+    int calculate(string s) {
+       stack&lt;char&gt; opS;
+       stack&lt;int&gt;  numS;
+       s = '(' + s + ')';
+
+       int i, curNum = 0, len = s.size();
+       for(i=0; i&lt;len; ++i)
+       {
+           if(isdigit(s[i])) curNum = curNum*10 + s[i] -'0';
+           else if(isspace(s[i])) continue;
+           else if(s[i] == '(')
+           {
+                opS.push('(');
+                opS.push('+');
+           }
+           else
+           {
+                switch(opS.top())
+                {
+                    case '*':
+                    case '/':
+                        curNum = opS.top()=='/'?numS.top()/curNum : numS.top()*curNum;
+                        opS.pop();
+                        numS.pop();
+                }
+                switch(s[i])
+                {
+                    case ')':
+                        if('-'== opS.top()) curNum = -curNum;
+                       opS.pop();
+
+                       while(opS.top()!='(') 
+                       {
+                           curNum += (opS.top()=='-')? -numS.top(): numS.top(); 
+                           opS.pop(); 
+                           numS.pop();
+                       }
+                       opS.pop(); // skip '('
+                       break;
+                    default: //+,-,*,/
+                        opS.push(s[i]);
+                        numS.push(curNum);
+                        curNum = 0;
+                }
+           }
+       }
+       return curNum;
+    }
+};
+```
+
+</pre>
+</div>
 <div created="20180404110710070" modified="20180404110802564" tags="KMP" title="28. Implement strStr()">
 <pre>!! Question
 
@@ -8803,6 +9006,153 @@ public:
     }
 };
 ```
+</pre>
+</div>
+<div created="20180406061516722" modified="20180406061605002" tags="stack" title="385. Mini Parser">
+<pre>!! Question
+
+```
+Given a nested list of integers represented as a string, implement a parser to deserialize it.
+
+Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+
+Note: You may assume that the string is well-formed:
+
+String is non-empty.
+String does not contain white spaces.
+String contains only digits 0-9, [, - ,, ].
+Example 1:
+
+Given s = &quot;324&quot;,
+
+You should return a NestedInteger object which contains a single integer 324.
+Example 2:
+
+Given s = &quot;[123,[456,[789]]]&quot;,
+
+Return a NestedInteger object containing a nested list with 2 elements:
+
+1. An integer containing value 123.
+2. A nested list containing two elements:
+    i.  An integer containing value 456.
+    ii. A nested list with one element:
+         a. An integer containing value 789.
+```
+
+!! Solution
+
+
+```
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * class NestedInteger {
+ *   public:
+ *     // Constructor initializes an empty nested list.
+ *     NestedInteger();
+ *
+ *     // Constructor initializes a single integer.
+ *     NestedInteger(int value);
+ *
+ *     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     bool isInteger() const;
+ *
+ *     // Return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // The result is undefined if this NestedInteger holds a nested list
+ *     int getInteger() const;
+ *
+ *     // Set this NestedInteger to hold a single integer.
+ *     void setInteger(int value);
+ *
+ *     // Set this NestedInteger to hold a nested list and adds a nested integer to it.
+ *     void add(const NestedInteger &amp;ni);
+ *
+ *     // Return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // The result is undefined if this NestedInteger holds a single integer
+ *     const vector&lt;NestedInteger&gt; &amp;getList() const;
+ * };
+ */
+class Solution {
+public:
+    NestedInteger deserialize(string s) {
+        function&lt;bool(char)&gt; isnumber = [](char c){ return (c == '-') || isdigit(c); };
+        
+        stack&lt;NestedInteger&gt; stk;
+        stk.push(NestedInteger());
+        
+        for (auto it = s.begin(); it != s.end();) {
+            const char &amp; c = (*it);
+            if (isnumber(c)) {
+                auto it2 = find_if_not(it, s.end(), isnumber);
+                int val = stoi(string(it, it2));
+                stk.top().add(NestedInteger(val));
+                it = it2;
+            }
+            else {
+                if (c == '[') {
+                    stk.push(NestedInteger());
+                }
+                else if (c == ']') {
+                    NestedInteger ni = stk.top();
+                    stk.pop();
+                    stk.top().add(ni);
+                }
+                ++it;
+            }
+        }
+        
+        NestedInteger result = stk.top().getList().front();
+        return result;
+    }
+};
+```
+</pre>
+</div>
+<div created="20180406082449665" modified="20180406082545487" tags="String" title="43. Multiply Strings">
+<pre>!! Question
+
+
+```
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2.
+
+Note:
+
+The length of both num1 and num2 is &lt; 110.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+```
+
+
+
+!! Solution
+
+
+```
+    string multiply(string num1, string num2) 
+    {
+        string sum(num1.size() + num2.size(), '0');
+
+        for (int i = num1.size() - 1; 0 &lt;= i; --i) 
+        {
+            int carry = 0;
+            for (int j = num2.size() - 1; 0 &lt;= j; --j) {
+                int tmp = (sum[i + j + 1] - '0') + (num1[i] - '0') * (num2[j] - '0') + carry;
+                sum[i + j + 1] = tmp % 10 + '0';
+                carry = tmp / 10;
+            }
+            sum[i] += carry;
+        }
+
+        size_t startpos = sum.find_first_not_of(&quot;0&quot;);
+        if (string::npos != startpos) 
+        {
+            return sum.substr(startpos);
+        }
+        return &quot;0&quot;;        
+    }
+```
+
 </pre>
 </div>
 <div created="20180402082801612" modified="20180402093900075" tags="String" title="459. Repeated Substring Pattern">
@@ -8871,6 +9221,116 @@ Explanation: It's the substring &quot;abc&quot; four times. (And the substring &
         int rightLen = next[size-1] + 1;
         return rightLen &amp;&amp; (rightLen % (size-rightLen) == 0);
     }
+```
+</pre>
+</div>
+<div created="20180406020153290" modified="20180406020244665" tags="String" title="49. Group Anagrams">
+<pre>!! Question
+
+```
+Given an array of strings, group anagrams together.
+
+For example, given: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;], 
+Return:
+
+[
+  [&quot;ate&quot;, &quot;eat&quot;,&quot;tea&quot;],
+  [&quot;nat&quot;,&quot;tan&quot;],
+  [&quot;bat&quot;]
+]
+Note: All inputs will be in lower-case.
+```
+
+!! Solution: unorder_map
+
+```
+    vector&lt;vector&lt;string&gt;&gt; groupAnagrams(vector&lt;string&gt;&amp; strs)
+    {
+        vector&lt;vector&lt;string&gt;&gt; result;
+        unordered_map&lt;string,vector&lt;string&gt;&gt; cache;
+        for(const auto&amp; s: strs)
+        {
+            string t = s;
+            sort(t.begin(), t.end());
+            cache[t].push_back(s);
+        }
+
+        result.reserve(cache.size());
+        for(auto&amp; p : cache)
+        {
+            result.push_back(move(p.second));
+        }
+        return result;
+    }
+```
+
+
+</pre>
+</div>
+<div created="20180406044811865" modified="20180406044854438" tags="String" title="522. Longest Uncommon Subsequence II">
+<pre>!! Question:
+
+
+```
+Given a list of strings, you need to find the longest uncommon subsequence among them. The longest uncommon subsequence is defined as the longest subsequence of one of these strings and this subsequence should not be any subsequence of the other strings.
+
+A subsequence is a sequence that can be derived from one sequence by deleting some characters without changing the order of the remaining elements. Trivially, any string is a subsequence of itself and an empty string is a subsequence of any string.
+
+The input will be a list of strings, and the output needs to be the length of the longest uncommon subsequence. If the longest uncommon subsequence doesn't exist, return -1.
+
+Example 1:
+Input: &quot;aba&quot;, &quot;cdc&quot;, &quot;eae&quot;
+Output: 3
+Note:
+
+All the given strings' lengths will not exceed 10.
+The length of the given list will be in the range of [2, 50].
+```
+
+!! Solution
+
+
+```
+bool cmp(pair&lt;string,int&gt; &amp;a, pair&lt;string,int&gt; &amp;b)
+{
+    return a.first.size() &gt; b.first.size();
+}
+
+bool isS1subsOfS2(string &amp;s1, string &amp;s2)
+{
+    int i = 0, j = 0;
+    while(i &lt; s1.size() &amp;&amp; j &lt; s2.size())
+    {
+        if(s1[i] == s2[j]) i++;
+        j++;
+    }
+    return i == s1.size();
+}
+
+class Solution {
+public:
+    int findLUSlength(vector&lt;string&gt;&amp; strs)
+    {
+        unordered_map&lt;string,int&gt; m;
+        for(int i = 0; i &lt; strs.size(); ++i)
+          ++m[strs[i]];
+        vector&lt;pair&lt;string,int&gt;&gt; v;
+        for(auto it = m.begin(); it != m.end(); ++it)
+           v.push_back(*it);
+        sort(v.begin(),v.end(),cmp);
+        for(int i = 0; i &lt; v.size(); ++i)
+        {
+           if(v[i].second == 1){
+               int j = 0;
+               for(; j &lt; i; ++j)
+                 if(isS1subsOfS2(v[i].first,v[j].first))
+                     break;
+               if(j == i) return v[i].first.size();
+           }
+        }
+        return -1;
+    }
+};
 ```
 </pre>
 </div>
@@ -8978,6 +9438,55 @@ Hence you just need to maximize Y. And Y is maximized when it is equal to X3 *�
 
 So the answer is always ''X1/(X2/X3/…/Xn) = (X1 *X3 *…*Xn)/X2''</pre>
 </div>
+<div created="20180406073607480" modified="20180406073657791" tags="String" title="556. Next Greater Element III">
+<pre>!! Question
+
+
+```
+Given a positive 32-bit integer n, you need to find the smallest 32-bit integer which has exactly the same digits existing in the integer n and is greater in value than n. If no such positive 32-bit integer exists, you need to return -1.
+
+Example 1:
+
+Input: 12
+Output: 21
+ 
+
+Example 2:
+
+Input: 21
+Output: -1
+```
+
+!! Solution
+
+
+```
+    int nextGreaterElement(int n) 
+    {
+        long long result = -1;
+        string str = to_string(n);
+        int size = str.size();
+
+        // step 1: find the descending consecutive sequence in the tail of string
+        // range: [pos, size)
+        int pos = size-2;
+        while(pos &gt;= 0 &amp;&amp; str[pos] &gt;= str[pos+1]) pos--;
+        if(pos &lt; 0) return -1;
+
+        // step 2: sort the found sub string
+        pos++;
+        sort(str.begin() + pos, str.end());
+
+        // step 3: find the swap pos
+        int leftPos = pos-1;
+        while(pos &lt; size &amp;&amp; str[leftPos] &gt;= str[pos]) pos++;
+        swap(str[leftPos], str[pos]);
+        result = stol(str);
+        return result &gt; INT_MAX ? -1 : int(result);
+    }
+```
+</pre>
+</div>
 <div created="20180405112648044" modified="20180405112731235" tags="DP" title="583. Delete Operation for Two Strings">
 <pre>!! Question
 
@@ -9018,6 +9527,46 @@ Characters in given words can only be lower-case letters.
     }
 ```
 
+</pre>
+</div>
+<div created="20180406085752081" modified="20180406085830488" tags="String" title="6. ZigZag Conversion">
+<pre>!! Question
+
+
+```
+The string &quot;PAYPALISHIRING&quot; is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: &quot;PAHNAPLSIIGYIR&quot;
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string text, int nRows);
+convert(&quot;PAYPALISHIRING&quot;, 3) should return &quot;PAHNAPLSIIGYIR&quot;.
+```
+
+!! Solution
+
+
+```
+    string convert(string s, int numRows) {
+        if(numRows &lt;= 1) return s;
+        string result = &quot;&quot;;
+        //the size of a cycle(period)
+        int cycle = 2 * numRows - 2;
+        for(int i = 0; i &lt; numRows; ++i)
+        {
+            for(int j = i; j &lt; s.length(); j = j + cycle){
+               result = result + s[j];
+               int secondJ = (j - i) + cycle - i;
+               if(i != 0 &amp;&amp; i != numRows-1 &amp;&amp; secondJ &lt; s.length())
+                   result = result + s[secondJ];
+            }
+        }
+        return result;        
+    }
+```
 </pre>
 </div>
 <div created="20180405090500225" modified="20180405091802259" tags="String" title="609. Find Duplicate File in System">
@@ -9249,6 +9798,88 @@ checkPalindrome(s,i,i+1); //To check the palindrome of even length palindromic s
 Step 2: From each character of the string, we will keep checking if the sub-string is a palindrome and increment the palindrome count. 
 
 To check the palindrome, keep checking the left and right of the character if it is same or not.</pre>
+</div>
+<div created="20180406070055021" modified="20180406070413957" tags="String" title="678. Valid Parenthesis String">
+<pre>!! Question
+
+
+```
+Given a string containing only three types of characters: '(', ')' and '*', write a function to check whether this string is valid. We define the validity of a string by these rules:
+
+Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+Any right parenthesis ')' must have a corresponding left parenthesis '('.
+Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string.
+An empty string is also valid.
+Example 1:
+Input: &quot;()&quot;
+Output: True
+Example 2:
+Input: &quot;(*)&quot;
+Output: True
+Example 3:
+Input: &quot;(*))&quot;
+Output: True
+Note:
+The string size will be in the range [1, 100].
+```
+
+!! Solution
+
+
+```
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int lower = 0, upper = 0;
+        for (char c : s) {
+            if (c=='(') {
+                lower++;
+                upper++;
+            } else if (c==')') {
+                lower--;               
+                upper--;
+            } else { // * encountered
+                lower--;
+                upper++;
+            }
+            lower = max(lower, 0);
+            if (upper&lt;0) // unmatched ')' found in the middle of string
+                return false;
+        }
+        return lower==0;
+    }
+};
+
+```
+
+!! Thought
+
+
+```
+The idea is to similar to validate a string only contains ‘(’ and ‘)’. But extend it to tracking the lower and upper bound of valid ‘(’ counts. My thinking process is as following.
+
+scan from left to right, and record counts of unpaired ‘(’ for all possible cases. For ‘(’ and ‘)’, it is straightforward, just increment and decrement all counts, respectively.
+When the character is ‘*’, there are three cases, ‘(’, empty, or ‘)’, we can think those three cases as three branches in the ongoing route.
+Take “(**())” as an example. There are 6 chars:
+----At step 0: only one count = 1.
+----At step 1: the route will be diverted into three branches.
+so there are three counts: 1 - 1, 1, 1 + 1 which is 0, 1, 2, for ‘)’, empty and ‘(’ respectively.
+----At step 2 each route is diverged into three routes again. so there will be 9 possible routes now.
+–	For count = 0, it will be diverted into 0 – 1, 0, 0 + 1, which is -1, 0, 1, but when the count is -1, that means there are more ‘)’s than ‘(’s, and we need to stop early at that route, since it is invalid. we end with 0, 1.
+–	For count = 1, it will be diverted into 1 – 1, 1, 1 + 1, which is 0, 1, 2
+–	For count = 2, it will be diverted into 2 – 1, 2, 2 + 1, which is 1, 2, 3
+To summarize step 2, we end up with counts of 0,1,2,3
+----At step 3, increment all counts --&gt; 1,2,3,4
+----At step 4, decrement all counts --&gt; 0,1,2,3
+----At step 5, decrement all counts --&gt; -1, 0,1,2, the route with count -1 is invalid, so stop early at that route. Now we have 0,1,2.
+In the very end, we find that there is a route that can reach count == 0. Which means all ‘(’ and ‘)’ are cancelled. So, the original String is valid.
+Another finding is counts of unpaired ‘(’ for all valid routes are consecutive integers. So we only need to keep a lower and upper bound of that consecutive integers to save space.
+One case doesn’t show up in the example is: if the upper bound is negative, that means all routes have more ‘)’ than ‘(’ --&gt; all routes are invalid --&gt; stop and return false.
+
+Hope this explanation helps.
+```
+</pre>
 </div>
 <div created="20180404065721024" modified="20180404070116863" tags="String" title="686. Repeated String Match">
 <pre>!! Question
@@ -9607,6 +10238,99 @@ the basic idea is to use two pointer low and high and an iterator i
 
 every elem left low pointer is 0, elem right high pointer is 2</pre>
 </div>
+<div created="20180406025634472" modified="20180406025839794" tags="String" title="767. Reorganize String">
+<pre>!! Question
+
+```
+Given a string S, check if the letters can be rearranged so that two characters that are adjacent to each other are not the same.
+
+If possible, output any possible result.  If not possible, return the empty string.
+
+Example 1:
+
+Input: S = &quot;aab&quot;
+Output: &quot;aba&quot;
+Example 2:
+
+Input: S = &quot;aaab&quot;
+Output: &quot;&quot;
+Note:
+
+S will consist of lowercase letters and have length in range [1, 500].
+```
+
+!! Solution 1: sort
+
+
+```
+    string reorganizeString_v1(string S)
+    {
+        vector&lt;int&gt; mp(26);
+        int n = S.size();
+        for (char c: S) ++mp[c-'a'];
+        vector&lt;pair&lt;int, char&gt;&gt; charCounts;
+        for (int i = 0; i &lt; 26; ++i) {
+            if (mp[i] &gt; (n+1)/2) return &quot;&quot;;
+            if (mp[i]) charCounts.push_back({mp[i], i+'a'});
+        }
+        sort(charCounts.rbegin(), charCounts.rend());
+        string strSorted;
+        for (auto&amp; p: charCounts)
+            strSorted += string(p.first, p.second);
+        string ans;
+        for (int i = 0, j = (n-1)/2+1; i &lt;= (n-1)/2; ++i, ++j)
+        {
+            ans += strSorted[i];
+            if (j &lt; n) ans += strSorted[j];
+        }
+        return ans;
+    }
+```
+
+Solution 2: no sort, O(n)
+
+```
+    string reorganizeString(string S) {
+        if(S.size() &lt;2) return S;
+        int maxc = 1;
+        int maxi = 0;
+        vector&lt;int&gt; m(26,0);
+        for( char c :S)
+        {
+             m[c-'a']++;
+            if(m[c-'a']&gt;maxc)
+            {
+                maxc = m[c-'a'];
+                maxi = c-'a';
+            }
+        }
+        if(maxc &gt; (S.size()+1)/2)
+            return &quot;&quot;;
+        int i =0;
+        while(m[maxi]--)
+        {
+            S[i]= maxi +'a';
+            i+=2;
+        }
+        for(int j =0;j&lt; 26;j++)
+        {
+            while(m[j]--&gt;0)
+            {
+                if(i&gt;=S.size())
+                {
+                    i = 1;
+                }
+                S[i] = j+'a';
+                i+=2;
+            }
+        }
+        return S;       
+    }
+```
+
+
+</pre>
+</div>
 <div created="20180329060826497" modified="20180329061106804" tags="String" title="788. Rotated Digits">
 <pre>!!! Question
 
@@ -9804,7 +10528,120 @@ i:(9) &gt;&gt;&gt; left:(8), right:(9), res:(32)
 ```
 </pre>
 </div>
+<div created="20180406034135111" modified="20180406034248814" tags="String" title="809. Expressive Words">
+<pre>!! Question
+
+
+```
+Sometimes people repeat letters to represent extra feeling, such as &quot;hello&quot; -&gt; &quot;heeellooo&quot;, &quot;hi&quot; -&gt; &quot;hiiii&quot;.  Here, we have groups, of adjacent letters that are all the same character, and adjacent characters to the group are different.  A group is extended if that group is length 3 or more, so &quot;e&quot; and &quot;o&quot; would be extended in the first example, and &quot;i&quot; would be extended in the second example.  As another example, the groups of &quot;abbcccaaaa&quot; would be &quot;a&quot;, &quot;bb&quot;, &quot;ccc&quot;, and &quot;aaaa&quot;; and &quot;ccc&quot; and &quot;aaaa&quot; are the extended groups of that string.
+
+For some given string S, a query word is stretchy if it can be made to be equal to S by extending some groups.  Formally, we are allowed to repeatedly choose a group (as defined above) of characters c, and add some number of the same character c to it so that the length of the group is 3 or more.  Note that we cannot extend a group of size one like &quot;h&quot; to a group of size two like &quot;hh&quot; - all extensions must leave the group extended - ie., at least 3 characters long.
+
+Given a list of query words, return the number of words that are stretchy. 
+
+Example:
+Input: 
+S = &quot;heeellooo&quot;
+words = [&quot;hello&quot;, &quot;hi&quot;, &quot;helo&quot;]
+Output: 1
+Explanation: 
+We can extend &quot;e&quot; and &quot;o&quot; in the word &quot;hello&quot; to get &quot;heeellooo&quot;.
+We can't extend &quot;helo&quot; to get &quot;heeellooo&quot; because the group &quot;ll&quot; is not extended.
+Notes:
+
+0 &lt;= len(S) &lt;= 100.
+0 &lt;= len(words) &lt;= 100.
+0 &lt;= len(words[i]) &lt;= 100.
+S and all words in words consist only of lowercase letters
+```
+
+!! Solution: 滑动窗口
+
+
+```
+    int expressiveWords(string S, vector&lt;string&gt;&amp; words) {
+        int res = 0;
+        for (auto &amp;w : words)
+        {
+            if (w.size() &lt;= S.size())
+            {
+                int i, j;
+                for (i = 0, j = 0; j &lt; S.size(); j++)
+                {
+                    if (i &lt;= w.size() &amp;&amp; w[i] == S[j]) // w[i] references to a null char when i reaches w.size()
+                        i++;
+                    else if (j &gt; 0 &amp;&amp; S[j] == S[j - 1] &amp;&amp; j + 1 &lt; S.size() &amp;&amp; S[j] == S[j + 1]) // last, this and next
+                        j++;
+                    else if (!(j &gt; 1 &amp;&amp; S[j] == S[j - 1] &amp;&amp; S[j] == S[j - 2])) // this and last 2 chars
+                        break;
+                }
+                if (i == w.size() &amp;&amp; j == S.size()) // both pointers reach the end
+                    res++;
+            }
+        }
+        return res;        
+    }
+```
+</pre>
+</div>
+<div created="20180406080222678" modified="20180406080317718" tags="DFS" title="93. Restore IP Addresses">
+<pre>!! Question
+
+```
+Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+For example:
+Given &quot;25525511135&quot;,
+
+return [&quot;255.255.11.135&quot;, &quot;255.255.111.35&quot;]. (Order does not matter)
+```
+
+!! Solution
+
+
+```
+    vector&lt;string&gt; restoreIpAddresses(string s) {
+        vector&lt;string&gt; ipComb;
+        vector&lt;string&gt; ipNum;
+        findIPAddr(s, 0, ipNum, ipComb);
+        return ipComb;
+    }
+    
+    void findIPAddr(string &amp;s, int index, vector&lt;string&gt; &amp;ipNum, vector&lt;string&gt; &amp;ipComb) {
+        if(ipNum.size()==4) {
+            if(index==s.size()) {
+                string ipAddr = ipNum[0];
+                for(int i=1; i&lt;4; i++) 
+                    ipAddr += (&quot;.&quot;+ipNum[i]);
+                ipComb.push_back(ipAddr);
+            }
+            return;
+        }
+        
+        string curNum;
+        for(int i=index; i&lt;s.size() &amp;&amp; i&lt;index+3; i++) {
+            curNum.push_back(s[i]);
+            if(isValidNum(curNum)) {
+                ipNum.push_back(curNum);
+                findIPAddr(s, i+1, ipNum, ipComb);
+                ipNum.pop_back();
+            }
+        }
+    }
+    
+    bool isValidNum(string s) {
+        if(s.empty() || s.size()&gt;3) return false;
+        if(s[0]=='0' &amp;&amp; s.size()!=1) return false;
+        if(s.size()==3 &amp;&amp; stoi(s)&gt;255) return false;
+        return true;
+    }
+```
+</pre>
+</div>
 <div created="20180126095409841" modified="20180324025340453" tags="TableOfContents array" title="Array">
+<pre></pre>
+</div>
+<div created="20180406080321342" modified="20180406080326957" tags="TableOfContents" title="DFS">
 <pre></pre>
 </div>
 <div created="20180405112635852" modified="20180405112646804" tags="TableOfContents" title="DP">
@@ -9985,6 +10822,9 @@ B[0:1], B[1:2], B[2:3] are not distinct.
 Construct suffix tree for this array. Then add together lengths of all edges in this tree.
 
 Time needed to construct suffix tree is O(n) with proper algorithm (Ukkonen's or McCreight's algorithms). Time needed to traverse the tree and add together lengths is also O(n).</pre>
+</div>
+<div created="20180406061505803" modified="20180406061514898" tags="TableOfContents" title="stack">
+<pre></pre>
 </div>
 <div created="20180329060810594" modified="20180329060824321" tags="TableOfContents" title="String">
 <pre></pre>
