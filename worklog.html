@@ -120,6 +120,8 @@ Error message and password prompt
 
 <p>This <a class="tc-tiddlylink-external" href="https://tiddlywiki.com" rel="noopener noreferrer" target="_blank">TiddlyWiki</a> contains the following tiddlers:</p><p><ul>
 
+<li>(*)300. Longest Increasing Subsequence</li>
+
 <li>$:/core</li>
 
 <li>$:/DefaultTiddlers</li>
@@ -152,6 +154,8 @@ Error message and password prompt
 
 <li>$:/state/toc/TableOfContents-String-497309061</li>
 
+<li>$:/state/toc/TableOfContents-tree-497309061</li>
+
 <li>$:/state/toc/TableOfContents/String-KMP-497309061</li>
 
 <li>$:/StoryList</li>
@@ -179,6 +183,8 @@ Error message and password prompt
 <li>190. Reverse Bits</li>
 
 <li>204. Count Primes</li>
+
+<li>215. Kth Largest Element in an Array</li>
 
 <li>227. Basic Calculator II</li>
 
@@ -256,6 +262,8 @@ Error message and password prompt
 
 <li>KMP</li>
 
+<li>level order</li>
+
 <li>Longest Prefix Suffix</li>
 
 <li>Math</li>
@@ -288,6 +296,42 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
+<div created="20180410095619912" modified="20180410095900177" tags="array" title="(*)300. Longest Increasing Subsequence">
+<pre>!! Question
+
+```
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+For example,
+Given [10, 9, 2, 5, 3, 7, 101, 18],
+The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. Note that there may be more than one LIS combination, it is only necessary for you to return the length.
+
+Your algorithm should run in O(n2) complexity.
+
+Follow up: Could you improve it to O(n log n) time complexity?
+
+Credits:
+Special thanks to @pbrother for adding this problem and creating all test cases.
+```
+
+!! Solution
+
+https://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
+
+
+```
+int lengthOfLIS(vector&lt;int&gt;&amp; nums) {
+    vector&lt;int&gt; res;
+    for(int i=0; i&lt;nums.size(); i++) {
+        auto it = std::lower_bound(res.begin(), res.end(), nums[i]);
+        if(it==res.end()) res.push_back(nums[i]);
+        else *it = nums[i];
+    }
+    return res.size();
+}
+```
+</pre>
+</div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="" description="TiddlyWiki5 core" list="readme" plugin-priority="0" plugin-type="plugin" title="$:/core" type="application/json" version="5.1.15">
 <pre>{
     &quot;tiddlers&quot;: {
@@ -8605,10 +8649,13 @@ Error message and password prompt
 <div created="20180402022411092" modified="20180406080337765" title="$:/state/toc/TableOfContents-String-497309061">
 <pre>close</pre>
 </div>
+<div created="20180410012601598" modified="20180410012609740" title="$:/state/toc/TableOfContents-tree-497309061">
+<pre>close</pre>
+</div>
 <div created="20180404105409827" modified="20180404105409827" title="$:/state/toc/TableOfContents/String-KMP-497309061">
 <pre>open</pre>
 </div>
-<div list="[[378. Kth Smallest Element in a Sorted Matrix]] [[46. Permutations]] [[384. Shuffle an Array]] [[454. 4Sum II]] sort [[bucket sort]] [[347. Top K Frequent Elements]] 中序遍历 tree [[204. Count Primes]] [[69. Sqrt(x)]] binary_search [[190. Reverse Bits]] bit [[172. Factorial Trailing Zeroes]] [[usual algorithms]] TableOfContents Math" title="$:/StoryList">
+<div list="[[(*)300. Longest Increasing Subsequence]] [[215. Kth Largest Element in an Array]] [[level order]] TableOfContents" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180115115326558" modified="20180115115326558" title="$:/temp/advancedsearch">
@@ -9010,6 +9057,161 @@ Solution
 
 
 
+</pre>
+</div>
+<div created="20180410091137367" modified="20180410092736365" tags="sort" title="215. Kth Largest Element in an Array">
+<pre>!! Question
+
+
+```
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+For example,
+Given [3,2,1,5,6,4] and k = 2, return 5.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ array's length.
+
+Credits:
+Special thanks to @mithmatt for adding this problem and creating all test cases.
+```
+
+!! Solution
+
+Well, this problem has a naive solution, which is to sort the array in descending order and return the k-1-th element.
+
+
+```
+class Solution {
+public:
+    int findKthLargest(vector&lt;int&gt;&amp; nums, int k) {
+        sort(nums.begin(), nums.end());
+        return nums[k - 1];
+    }
+}; 
+```
+
+However, sorting algorithm gives O(nlogn) complexity. Suppose n = 10000 and k = 2, then we are doing a lot of unnecessary operations. In fact, this problem has at least two simple and faster solutions.
+
+Well, the faster solution has no mystery. It is also closely related to sorting. I will give two algorithms for this problem below, one using quicksort(specifically, the partition subroutine) and the other using heapsort.
+
+!! Quicksort
+
+In quicksort, in each iteration, we need to select a pivot and then partition the array into three parts:
+
+Elements smaller than the pivot;
+Elements equal to the pivot;
+Elements larger than the pivot.
+Now, let’s do an example with the array [3, 2, 1, 5, 4, 6] in the problem statement. Let’s assume in each time we select the leftmost element to be the pivot, in this case, 3. We then use it to partition the array into the above 3 parts, which results in [1, 2, 3, 5, 4, 6]. Now 3 is in the third position and we know that it is the third smallest element. Now, do you recognize that this subroutine can be used to solve this problem?
+
+In fact, the above partition puts elements smaller than the pivot before the pivot and thus the pivot will then be the k-th smallest element if it is at the k-1-th position. Since the problem requires us to find the k-th largest element, we can simply modify the partition to put elements larger than the pivot before the pivot. That is, after partition, the array becomes [5, 6, 4, 3, 1, 2]. Now we know that 3 is the 4-th largest element. If we are asked to find the 2-th largest element, then we know it is left to 3. If we are asked to find the 5-th largest element, then we know it is right to 3. So, in the average sense, the problem is reduced to approximately half of its original size, giving the recursion T(n) = T(n/2) + O(n) in which O(n) is the time for partition. This recursion, once solved, gives T(n) = O(n) and thus we have a linear time solution. Note that since we only need to consider one half of the array, the time complexity is O(n). If we need to consider both the two halves of the array, like quicksort, then the recursion will be T(n) = 2T(n/2) + O(n) and the complexity will be O(nlogn).
+
+Of course, O(n) is the average time complexity. In the worst case, the recursion may become T(n) = T(n - 1) + O(n) and the complexity will be O(n^2).
+
+Now let’s briefly write down the algorithm before writing our codes.
+
+Initialize left to be 0 and right to be nums.size() - 1;
+Partition the array, if the pivot is at the k-1-th position, return it (we are done);
+If the pivot is right to the k-1-th position, update right to be the left neighbor of the pivot;
+Else update left to be the right neighbor of the pivot.
+Repeat 2.
+Now lets turn it into code.
+
+
+```
+class Solution { 
+public:
+    int partition(vector&lt;int&gt;&amp; nums, int left, int right) {
+        int pivot = nums[left];
+        int l = left + 1, r = right;
+        while (l &lt;= r) {
+            if (nums[l] &lt; pivot &amp;&amp; nums[r] &gt; pivot)
+                swap(nums[l++], nums[r--]);
+            if (nums[l] &gt;= pivot) l++; 
+            if (nums[r] &lt;= pivot) r--;
+        }
+        swap(nums[left], nums[r]);
+        return r;
+    }
+    
+    int findKthLargest(vector&lt;int&gt;&amp; nums, int k) {
+        int left = 0, right = nums.size() - 1;
+        while (true) {
+            int pos = partition(nums, left, right);
+            if (pos == k - 1) return nums[pos];
+            if (pos &gt; k - 1) right = pos - 1;
+            else left = pos + 1;
+        }
+    }
+}
+```
+
+!! Heapsort
+
+Well, this problem still has a tag “heap”. If you are familiar with heapsort, you can solve this problem using the following idea:
+
+Build a max-heap for nums, set heap_size to be nums.size();
+Swap nums[0] (after buding the max-heap, it will be the largest element) with nums[heap_size - 1] (currently the last element). Then decrease heap_size by 1 and max-heapify nums (recovering its max-heap property) at index 0;
+Repeat 2 for k times and the k-th largest element will be stored finally at nums[heap_size].
+Now I paste my code below. If you find it tricky, I suggest you to read the Heapsort chapter of Introduction to Algorithms, which has a nice explanation of the algorithm. My code simply translates the pseudo code in that book :-)
+
+
+```
+class Solution {
+public:   
+    inline int left(int idx) {
+        return (idx &lt;&lt; 1) + 1;
+    }
+    inline int right(int idx) {
+        return (idx &lt;&lt; 1) + 2;
+    }
+    void max_heapify(vector&lt;int&gt;&amp; nums, int idx) {
+        int largest = idx;
+        int l = left(idx), r = right(idx);
+        if (l &lt; heap_size &amp;&amp; nums[l] &gt; nums[largest]) largest = l;
+        if (r &lt; heap_size &amp;&amp; nums[r] &gt; nums[largest]) largest = r;
+        if (largest != idx) {
+            swap(nums[idx], nums[largest]);
+            max_heapify(nums, largest);
+        }
+    }
+    void build_max_heap(vector&lt;int&gt;&amp; nums) {
+        heap_size = nums.size();
+        for (int i = (heap_size &gt;&gt; 1) - 1; i &gt;= 0; i--)
+            max_heapify(nums, i);
+    }
+    int findKthLargest(vector&lt;int&gt;&amp; nums, int k) {
+        build_max_heap(nums);
+        for (int i = 0; i &lt; k; i++) {
+            swap(nums[0], nums[heap_size - 1]);
+            heap_size--;
+            max_heapify(nums, 0);
+        }
+        return nums[heap_size];
+    }
+private:
+    int heap_size;
+}
+```
+
+Well, the priority_queue can also be replaced by multiset :-)
+
+
+
+```
+class Solution {
+public:
+    int findKthLargest(vector&lt;int&gt;&amp; nums, int k) {
+        multiset&lt;int&gt; mset;
+        int n = nums.size();
+        for (int i = 0; i &lt; n; i++) { 
+            mset.insert(nums[i]);
+            if (mset.size() &gt; k)
+                mset.erase(mset.begin());
+        }
+        return *mset.begin();
+    }
+};
+```
 </pre>
 </div>
 <div created="20180406063240715" modified="20180406063801092" tags="String" title="227. Basic Calculator II">
@@ -11273,6 +11475,35 @@ Running time: Linear in the input + output</pre>
 <div created="20180402023249534" modified="20180402023311501" tags="String" title="KMP">
 <pre></pre>
 </div>
+<div created="20180410052815253" modified="20180410052901610" tags="tree" title="level order">
+<pre>!! Solution 1: recursive
+
+
+```
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; ret;
+
+public:
+    void buildVector(TreeNode *root, int depth)
+    {
+        if(root == NULL) return;
+        if(ret.size() == depth)
+            ret.push_back(vector&lt;int&gt;());
+
+        ret[depth].push_back(root-&gt;val);
+        buildVector(root-&gt;left, depth + 1);
+        buildVector(root-&gt;right, depth + 1);
+    }
+
+    vector&lt;vector&lt;int&gt; &gt; levelOrder(TreeNode *root) {
+        buildVector(root, 0);
+        return ret;
+    }
+};
+```
+</pre>
+</div>
 <div created="20180402023320028" modified="20180402073941026" tags="KMP" title="Longest Prefix Suffix">
 <pre>!!! Question
 
@@ -11542,7 +11773,7 @@ If nums = [1,2,2], a solution is:
 ```
 </pre>
 </div>
-<div created="20180115115631203" modified="20180402023248598" tags="$:/tags/SideBar" title="TableOfContents">
+<div created="20180115115631203" modified="20180410052814275" tags="$:/tags/SideBar" title="TableOfContents">
 <pre>&lt;div class=&quot;tc-table-of-contents&quot;&gt;
 
 &lt;&lt;toc-selective-expandable 'TableOfContents'&gt;&gt;
@@ -11553,8 +11784,7 @@ If nums = [1,2,2], a solution is:
 <pre></pre>
 </div>
 <div created="20180409022157206" modified="20180409023147237" tags="TableOfContents" title="usual algorithms">
-<pre>
-```
+<pre>```
 归并排序
 基数排序
 冒泡排序
