@@ -186,6 +186,8 @@ Error message and password prompt
 
 <li>190. Reverse Bits</li>
 
+<li>200. Number of Islands</li>
+
 <li>204. Count Primes</li>
 
 <li>215. Kth Largest Element in an Array</li>
@@ -241,6 +243,8 @@ Error message and password prompt
 <li>696. Count Binary Substrings</li>
 
 <li>718. Maximum Length of Repeated Subarray</li>
+
+<li>73. Set Matrix Zeroes</li>
 
 <li>75. Sort Colors</li>
 
@@ -8663,7 +8667,7 @@ int lengthOfLIS(vector&lt;int&gt;&amp; nums) {
 <div created="20180404105409827" modified="20180404105409827" title="$:/state/toc/TableOfContents/String-KMP-497309061">
 <pre>open</pre>
 </div>
-<div list="[[116. Populating Next Right Pointers in Each Node]] [[11. Container With Most Water]] [[36. Valid Sudoku]] [[279. Perfect Squares]] [[(*)300. Longest Increasing Subsequence]] [[215. Kth Largest Element in an Array]] [[level order]] TableOfContents" title="$:/StoryList">
+<div list="[[73. Set Matrix Zeroes]] [[200. Number of Islands]] TableOfContents" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180115115326558" modified="20180115115326558" title="$:/temp/advancedsearch">
@@ -9111,6 +9115,64 @@ Special thanks to @ts for adding this problem and creating all test cases.
         return n;        
     }
 ```
+
+</pre>
+</div>
+<div created="20180411111132716" modified="20180411111230337" tags="DFS" title="200. Number of Islands">
+<pre>!! Question
+
+
+```
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+Example 1:
+
+11110
+11010
+11000
+00000
+Answer: 1
+
+Example 2:
+
+11000
+11000
+00100
+00011
+Answer: 3
+
+Credits:
+Special thanks to @mithmatt for adding this problem and creating all test cases.
+```
+
+!! Solution
+
+
+```
+    void DFS(vector&lt;vector&lt;char&gt;&gt;&amp; grid, int i, int j)
+    {
+	    if(i &lt; 0 || j &lt; 0 || i &gt;= grid.size() || j &gt;= grid[0].size()) return;
+	    if('0' == grid[i][j]) return;
+	    grid[i][j] = '0';
+	    DFS(grid, i-1, j);
+	    DFS(grid, i+1, j);
+	    DFS(grid, i, j - 1);
+	    DFS(grid, i, j + 1);
+	}
+	int numIslands(vector&lt;vector&lt;char&gt;&gt;&amp; grid) 
+    {
+		int counter = 0;
+		for (int i = 0; i &lt; grid.size(); ++i)
+			for (int j = 0; j &lt; grid[i].size(); ++j)
+				if ('1' == grid[i][j])
+				{
+					++counter;
+					DFS(grid, i, j);
+				}
+		return counter;
+	}
+```
+
 
 </pre>
 </div>
@@ -11118,6 +11180,58 @@ private:
                 cnt = 0;
         }
         return len;
+    }
+};
+```
+</pre>
+</div>
+<div created="20180411111609800" modified="20180411111706158" tags="Array" title="73. Set Matrix Zeroes">
+<pre>!! Problem
+
+
+```
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+```
+
+!! Solution
+
+
+
+```
+#define GUARD -10000
+/*空间复杂度O(1)*/
+/*时间复杂度O(m*n)*/
+class Solution 
+{
+public:
+    void setZeroes(vector&lt;vector&lt;int&gt; &gt; &amp;matrix) {
+        
+        int i,j;
+        int m=matrix.size();
+        if(m == 0) return ;
+        
+        int n=matrix[0].size();
+        if(n==0) return;
+        
+
+        for(i=0;i&lt;m;i++){
+            for(j=0;j&lt;n;j++)
+            {
+                if(matrix[i][j] == 0){ matrix[i][j]=GUARD;}
+                
+            }
+        }
+            
+        for(i=0;i&lt;m;i++)
+            for(j=0;j&lt;n;j++)
+            {
+                if(matrix[i][j] == GUARD){ 
+                    int p;
+                    for(p=0;p&lt;m;p++) if(matrix[p][j] != GUARD) matrix[p][j]=0;
+                    for(p=0;p&lt;n;p++) if(matrix[i][p] != GUARD) matrix[i][p]=0;
+                    matrix[i][j]=0;
+                }
+            } 
     }
 };
 ```

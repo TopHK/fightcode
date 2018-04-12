@@ -180,6 +180,12 @@ Error message and password prompt
 
 <li>Importance</li>
 
+<li>Install</li>
+
+<li>Install Python</li>
+
+<li>Install tf</li>
+
 <li>Introduction</li>
 
 <li>KNN</li>
@@ -8477,7 +8483,7 @@ Error message and password prompt
 <div created="20180203064155874" modified="20180203064155874" title="$:/state/toc/TableOfContents/Python-Pandas--81657105">
 <pre>open</pre>
 </div>
-<div list="[[numpy common functions]] Numpy [[data plot]] [[data process]] Pandas [[Useful Functions]] Python Introduction" title="$:/StoryList">
+<div list="[[Install tf]] [[Install Python]] Install Importance" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20170724033135400" modified="20170724033135400" title="$:/temp/advancedsearch">
@@ -8496,7 +8502,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///E:/blog/log%20summary/project/sky_ml%20(7).html&quot;
+            &quot;text&quot;: &quot;file:///D:/fightcode/sky_ml.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -8516,7 +8522,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/E:/blog/log%20summary/project/sky_ml%20(7).html&quot;
+            &quot;text&quot;: &quot;/D:/fightcode/sky_ml.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -8984,6 +8990,75 @@ data and have to revisit steps 1–5.
 
 !!! jobs
 http://blog.udacity.com/2016/04/5-skills-you-need-to-become-a-machine-learning-engineer.html</pre>
+</div>
+<div created="20180411071909462" modified="20180411071920971" tags="TableOfContents" title="Install">
+<pre></pre>
+</div>
+<div created="20180411071923138" modified="20180411072210862" tags="Install" title="Install Python">
+<pre>https://blog.csdn.net/zr1076311296/article/details/75136612?locationNum=6&amp;fps=1
+
+从源码安装，不过为了能用pip3.6，编译安装时，需作如下操作：
+
+
+```
+1.安装ssl
+sudo apt-get install openssl
+
+sudo apt-get install libssl-dev
+
+2. 修改Moudles/Setup  (该目录在python的解压目录下)
+
+vim Modules/Setup
+#修改结果如下：
+# Socket module helper for socket(2)
+_socket socketmodule.c timemodule.c
+
+# Socket module helper for SSL support; you must comment out the other
+# socket line above, and possibly edit the SSL variable:
+#SSL=/usr/local/ssl
+_ssl _ssl.c \
+-DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+-L$(SSL)/lib -lssl -lcrypto
+
+
+3.重新安装一次
+
+./configure --prefix=/usr/local/python
+
+make
+
+sudo -H make install
+
+
+4.python3
+
+&gt;&gt;&gt;import ssl  #检测成功！
+&gt;&gt;&gt; 
+```
+
+最后建立python3.6的软链接：
+
+
+```
+sudo ln -s /usr/local/python/bin/python3.6 /usr/local/bin/python3.6
+```
+</pre>
+</div>
+<div created="20180411072214998" modified="20180411073606332" tags="Install" title="Install tf">
+<pre>!!! 安装virtualenv
+
+```
+pip3 install --user --upgrade virtualenv
+virtualenv env
+source env/bin/activate
+```
+!!! 安装依赖包
+
+```
+pip3 install --upgrade jupyter matplotlib numpy pandas scipy scikit-learn
+```
+
+</pre>
 </div>
 <div created="20180203050610309" modified="20180203050628913" tags="TableOfContents" title="Introduction">
 <pre></pre>
