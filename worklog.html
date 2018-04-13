@@ -190,6 +190,8 @@ Error message and password prompt
 
 <li>204. Count Primes</li>
 
+<li>207. Course Schedule</li>
+
 <li>215. Kth Largest Element in an Array</li>
 
 <li>227. Basic Calculator II</li>
@@ -226,6 +228,8 @@ Error message and password prompt
 
 <li>556. Next Greater Element III</li>
 
+<li>56. Merge Intervals</li>
+
 <li>583. Delete Operation for Two Strings</li>
 
 <li>6. ZigZag Conversion</li>
@@ -259,6 +263,8 @@ Error message and password prompt
 <li>93. Restore IP Addresses</li>
 
 <li>Array</li>
+
+<li>BFS</li>
 
 <li>binary_search</li>
 
@@ -8655,8 +8661,8 @@ int lengthOfLIS(vector&lt;int&gt;&amp; nums) {
 <div created="20180326024851026" modified="20180329060805065" title="$:/state/toc/TableOfContents-Array-497309061">
 <pre>close</pre>
 </div>
-<div created="20180406020150761" modified="20180406080339477" title="$:/state/toc/TableOfContents-Math-497309061">
-<pre>open</pre>
+<div created="20180406020150761" modified="20180412092255782" title="$:/state/toc/TableOfContents-Math-497309061">
+<pre>close</pre>
 </div>
 <div created="20180402022411092" modified="20180406080337765" title="$:/state/toc/TableOfContents-String-497309061">
 <pre>close</pre>
@@ -8667,7 +8673,7 @@ int lengthOfLIS(vector&lt;int&gt;&amp; nums) {
 <div created="20180404105409827" modified="20180404105409827" title="$:/state/toc/TableOfContents/String-KMP-497309061">
 <pre>open</pre>
 </div>
-<div list="[[73. Set Matrix Zeroes]] [[200. Number of Islands]] TableOfContents" title="$:/StoryList">
+<div list="[[56. Merge Intervals]] [[207. Course Schedule]] BFS TableOfContents" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180115115326558" modified="20180115115326558" title="$:/temp/advancedsearch">
@@ -9212,6 +9218,66 @@ Solution
 
 
 
+</pre>
+</div>
+<div created="20180412092304900" modified="20180412092352964" tags="BFS" title="207. Course Schedule">
+<pre>!! Question
+
+
+```
+There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+For example:
+
+2, [[1,0]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+
+2, [[1,0],[0,1]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+
+Note:
+The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
+You may assume that there are no duplicate edges in the input prerequisites.
+```
+
+!! Solution
+
+
+```
+public:
+    bool canFinish(int numCourses, vector&lt;pair&lt;int, int&gt;&gt;&amp; prerequisites) {
+        vector&lt;unordered_set&lt;int&gt;&gt; graph = make_graph(numCourses, prerequisites);
+        vector&lt;int&gt; degrees = compute_indegree(graph);
+        for (int i = 0; i &lt; numCourses; i++) {
+            int j = 0;
+            for (; j &lt; numCourses; j++)
+                if (!degrees[j]) break;
+            if (j == numCourses) return false;
+            degrees[j] = -1;
+            for (int neigh : graph[j])
+                degrees[neigh]--;
+        }
+        return true;
+    }
+private:
+    vector&lt;unordered_set&lt;int&gt;&gt; make_graph(int numCourses, vector&lt;pair&lt;int, int&gt;&gt;&amp; prerequisites) {
+        vector&lt;unordered_set&lt;int&gt;&gt; graph(numCourses);
+        for (auto pre : prerequisites)
+            graph[pre.second].insert(pre.first);
+        return graph;
+    }
+    vector&lt;int&gt; compute_indegree(vector&lt;unordered_set&lt;int&gt;&gt;&amp; graph) {
+        vector&lt;int&gt; degrees(graph.size(), 0);
+        for (auto neighbors : graph)
+            for (int neigh : neighbors)
+                degrees[neigh]++;
+        return degrees;
+    }
+```
 </pre>
 </div>
 <div created="20180410091137367" modified="20180410092736365" tags="sort" title="215. Kth Largest Element in an Array">
@@ -10418,6 +10484,38 @@ Output: -1
         swap(str[leftPos], str[pos]);
         result = stol(str);
         return result &gt; INT_MAX ? -1 : int(result);
+    }
+```
+</pre>
+</div>
+<div created="20180412092920073" modified="20180412093002165" tags="sort" title="56. Merge Intervals">
+<pre>!!! Question
+
+
+```
+Given a collection of intervals, merge all overlapping intervals.
+
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+```
+
+!!! Solution
+
+
+```
+    vector&lt;Interval&gt; merge(vector&lt;Interval&gt;&amp; intervals) 
+    {
+        vector&lt;Interval&gt; res;
+        if (intervals.empty()) return res;
+        sort(intervals.begin(), intervals.end(), [](Interval a, Interval b){return a.start &lt; b.start;});
+        res.push_back(intervals[0]);
+        for (int i = 1; i &lt; intervals.size(); i++) {
+            if (res.back().end &lt; intervals[i].start) res.push_back(intervals[i]);
+            else
+                res.back().end = max(res.back().end, intervals[i].end);
+        }
+        return res;        
     }
 ```
 </pre>
@@ -11693,6 +11791,9 @@ return [&quot;255.255.11.135&quot;, &quot;255.255.111.35&quot;]. (Order does not
 </pre>
 </div>
 <div created="20180126095409841" modified="20180324025340453" tags="TableOfContents array" title="Array">
+<pre></pre>
+</div>
+<div created="20180412092258718" modified="20180412092303788" tags="TableOfContents" title="BFS">
 <pre></pre>
 </div>
 <div created="20180409051831997" modified="20180409051850524" tags="TableOfContents" title="binary_search">

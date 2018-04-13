@@ -146,6 +146,10 @@ Error message and password prompt
 
 <li>$:/state/tab/sidebar--1835078512</li>
 
+<li>$:/state/toc/TableOfContents-ANN--81657105</li>
+
+<li>$:/state/toc/TableOfContents-Install--81657105</li>
+
 <li>$:/state/toc/TableOfContents-Introduction-497309061</li>
 
 <li>$:/state/toc/TableOfContents-Math--81657105</li>
@@ -155,6 +159,8 @@ Error message and password prompt
 <li>$:/state/toc/TableOfContents-Supervised Learning--81657105</li>
 
 <li>$:/state/toc/TableOfContents-Supervised Learning-497309061</li>
+
+<li>$:/state/toc/TableOfContents-TfBasis--81657105</li>
 
 <li>$:/state/toc/TableOfContents/Python-Pandas--81657105</li>
 
@@ -174,9 +180,17 @@ Error message and password prompt
 
 <li>About Work</li>
 
+<li>ANN</li>
+
+<li>backpropagation</li>
+
+<li>Basement</li>
+
 <li>data plot</li>
 
 <li>data process</li>
+
+<li>exploding gradients</li>
 
 <li>Importance</li>
 
@@ -212,7 +226,13 @@ Error message and password prompt
 
 <li>TableOfContents</li>
 
+<li>TF procedure</li>
+
+<li>TfBasis</li>
+
 <li>Useful Functions</li>
+
+<li>vanishing gradients problem</li>
 
 </ul>
 </p>
@@ -8465,14 +8485,20 @@ Error message and password prompt
 <div created="20170724033201752" modified="20180203051957229" title="$:/state/tab/sidebar--1835078512">
 <pre>TableOfContents</pre>
 </div>
+<div created="20180412103911237" modified="20180412103911237" title="$:/state/toc/TableOfContents-ANN--81657105">
+<pre>open</pre>
+</div>
+<div created="20180412022845279" modified="20180412024225293" title="$:/state/toc/TableOfContents-Install--81657105">
+<pre>close</pre>
+</div>
 <div created="20180203050652816" modified="20180203051727761" title="$:/state/toc/TableOfContents-Introduction-497309061">
 <pre>open</pre>
 </div>
 <div created="20180203052000797" modified="20180203052000797" title="$:/state/toc/TableOfContents-Math--81657105">
 <pre>open</pre>
 </div>
-<div created="20180203062346303" modified="20180203062346303" title="$:/state/toc/TableOfContents-Python--81657105">
-<pre>open</pre>
+<div created="20180203062346303" modified="20180412024226204" title="$:/state/toc/TableOfContents-Python--81657105">
+<pre>close</pre>
 </div>
 <div created="20180203051959661" modified="20180203051959661" title="$:/state/toc/TableOfContents-Supervised Learning--81657105">
 <pre>open</pre>
@@ -8480,10 +8506,13 @@ Error message and password prompt
 <div created="20180203051454994" modified="20180203051518521" title="$:/state/toc/TableOfContents-Supervised Learning-497309061">
 <pre>close</pre>
 </div>
+<div created="20180412103907772" modified="20180412103910507" title="$:/state/toc/TableOfContents-TfBasis--81657105">
+<pre>close</pre>
+</div>
 <div created="20180203064155874" modified="20180203064155874" title="$:/state/toc/TableOfContents/Python-Pandas--81657105">
 <pre>open</pre>
 </div>
-<div list="[[Install tf]] [[Install Python]] Install Importance" title="$:/StoryList">
+<div list="[[exploding gradients]] [[vanishing gradients problem]] [[TF procedure]] Importance" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20170724033135400" modified="20170724033135400" title="$:/temp/advancedsearch">
@@ -8502,7 +8531,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///D:/fightcode/sky_ml.html&quot;
+            &quot;text&quot;: &quot;file:///C:/Users/kangshaojie.ESG/Downloads/sky_ml%20(5).html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -8522,7 +8551,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/D:/fightcode/sky_ml.html&quot;
+            &quot;text&quot;: &quot;/C:/Users/kangshaojie.ESG/Downloads/sky_ml%20(5).html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -8668,6 +8697,149 @@ C. The Elements of Statistical Learning. By Trevor Hastie, Robert Tibshirani and
 D. Pattern Recognition and Machine Learning. By Christopher Bishop.
 
 内容识别和分类引擎研发经验（指纹、模式识别、自然语言处理、机器学习等）优先??</pre>
+</div>
+<div created="20180412081924221" modified="20180412081933299" tags="TableOfContents" title="ANN">
+<pre></pre>
+</div>
+<div created="20180412081936483" modified="20180412082727093" tags="ANN" title="backpropagation">
+<pre>for each training instance the backpropagation algorithm
+''first makes a prediction (forward pass)''
+
+''measures the error''
+
+goes through each layer in reverse to ''measure the error contribution'' from each connection (reverse pass)
+
+and finally slightly ''tweaks the connection weights'' to reduce the error (Gradient Descent step)
+
+!!! activation functions
+
+Logistic Function: 梯度弥散
+
+The ReLU function：最佳
+
+Softmax regression + ReLU:  MLP</pre>
+</div>
+<div created="20180412024243853" modified="20180412073957548" tags="TfBasis" title="Basement">
+<pre>!!! global_variables_initializer
+```
+ 34 def example3():
+ 35     x = tf.Variable(3, name=&quot;x&quot;)
+ 36     y = tf.Variable(4, name=&quot;y&quot;)
+ 37     f = x*x*y + y + 2
+ 38     init = tf.global_variables_initializer()
+ 39     with tf.Session() as sess:
+ 40         init.run()
+ 41         result = f.eval()
+ 42         print(result)
+```
+
+!!! InteractiveSession
+```
+ 45 &quot;&quot;&quot; InteractiveSession() &quot;&quot;&quot;
+ 46 def example4():
+ 47     x = tf.Variable(3, name=&quot;x&quot;)
+ 48     y = tf.Variable(4, name=&quot;y&quot;)
+ 49     f = x*x*y + y + 2
+ 50     init = tf.global_variables_initializer()
+ 51 
+ 52     sess = tf.InteractiveSession()
+ 53     init.run()
+ 54     result = f.eval()
+ 55     print(result)
+ 56     sess.close()
+```
+!!! Using autodiff
+
+The `gradients`() function takes an op (in this case mse) and a list of variables (in this case just theta), and it creates a list of ops (one per variable) to compute the gradients of the op with regards to each variable.
+
+```
+gradients = tf.gradients(mse, [theta])[0]
+```
+
+!!! Using an Optimizer
+
+So TensorFlow computes the gradients for you. But it gets even easier: it also provides a number of `optimizers` out of the box, including a Gradient Descent optimizer:
+
+
+```
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+training_op = optimizer.minimize(mse)
+```
+
+!!! Saving and Restoring Models
+
+
+```
+ 51 with tf.Session() as sess:
+ 52     sess.run(init)
+ 53     saver = tf.train.Saver()
+ 54     
+ 55     for epoch in range(n_epochs):
+ 56         if epoch % 100 == 0:
+ 57             save_path = saver.save(sess, &quot;/tmp/my_model.ckpt&quot;)
+ 58         for batch_index in range(n_batches):
+ 59             X_batch, y_batch = fetch_batch(epoch, batch_index, batch_size)
+ 60             sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
+ 61     best_theta = theta.eval()
+ 62     save_path = saver.save(sess, &quot;/tmp/my_model_final.ckpt&quot;)
+```
+
+
+```
+with tf.Session() as sess:
+    saver.restore(sess, &quot;/tmp/my_model_final.ckpt&quot;)
+```
+
+!!! Visualizing the Graph and Training Curves Using TensorBoard
+
+
+```
+mse_summary = tf.summary.scalar('MSE', mse)
+file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
+```
+
+
+```
+[...]
+for batch_index in range(n_batches):
+    X_batch, y_batch = fetch_batch(epoch, batch_index, batch_size)
+    if batch_index % 10 == 0:
+        summary_str = mse_summary.eval(feed_dict={X: X_batch, y: y_batch})
+        step = epoch * n_batches + batch_index
+        file_writer.add_summary(summary_str, step)
+    sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
+[...]
+```
+
+!!! Name Scopes
+
+
+```
+with tf.name_scope(&quot;loss&quot;) as scope:
+    error = y_pred - y
+    mse = tf.reduce_mean(tf.square(error), name=&quot;mse&quot;)
+```
+
+The name of each op defined within the scope is now prefixed with &quot;loss/&quot;:
+
+!!! Sharing Variables
+
+
+```
+ 64 def relu(X):
+ 65     with tf.variable_scope(&quot;relu&quot;, reuse=True):
+ 66     threshold = tf.get_variable(&quot;threshold&quot;) # reuse existing variable
+ 67     [...]
+ 68     return tf.maximum(z, threshold, name=&quot;max&quot;)
+ 69 
+ 70 X = tf.placeholder(tf.float32, shape=(None, n_features), name=&quot;X&quot;)
+ 71 with tf.variable_scope(&quot;relu&quot;): # create the variable
+ 72     threshold = tf.get_variable(&quot;threshold&quot;, shape=(), initializer=tf.constant_initializer(0.0))
+ 73 relus = [relu(X) for relu_index in range(5)]
+ 74 output = tf.add_n(relus, name=&quot;output&quot;)  
+
+```
+</pre>
 </div>
 <div created="20180203074939956" modified="20180203074951339" tags="Pandas" title="data plot">
 <pre>!! pandas.DataFrame.plot
@@ -8879,6 +9051,9 @@ dtype: float64
 !!! Numeric Replacement
 </pre>
 </div>
+<div created="20180412105744757" modified="20180412105748686" tags="ANN" title="exploding gradients">
+<pre></pre>
+</div>
 <div created="20170724033405995" modified="20180203050650753" tags="Introduction" title="Importance">
 <pre>I keep saying the sexy job in the next ten years will be statisticians. People think I’m
 joking, but who would’ve guessed that computer engineers would’ve been the sexy job of
@@ -9044,7 +9219,7 @@ sudo ln -s /usr/local/python/bin/python3.6 /usr/local/bin/python3.6
 ```
 </pre>
 </div>
-<div created="20180411072214998" modified="20180411073606332" tags="Install" title="Install tf">
+<div created="20180411072214998" modified="20180412022910097" tags="Install" title="Install tf">
 <pre>!!! 安装virtualenv
 
 ```
@@ -9058,6 +9233,12 @@ source env/bin/activate
 pip3 install --upgrade jupyter matplotlib numpy pandas scipy scikit-learn
 ```
 
+!!! install tf
+
+
+```
+pip3 install --upgrade tensorflow
+```
 </pre>
 </div>
 <div created="20180203050610309" modified="20180203050628913" tags="TableOfContents" title="Introduction">
@@ -9283,6 +9464,89 @@ NSFG）项目，该项目是为了收集美国人的“家庭生活、婚姻状�
 
 &lt;/div&gt;</pre>
 </div>
+<div created="20180412103915164" modified="20180412105057014" tags="ANN" title="TF procedure">
+<pre>
+
+```
+ 21 def main():
+ 22     n_inputs = 28*28
+ 23     n_hidden1 = 300
+ 24     n_hidden2 = 100
+ 25     n_outputs = 10
+ 26 
+ 27     # created placeholders for the inputs and the targets
+ 28     X = tf.placeholder(tf.float32, shape=(None, n_inputs), name=&quot;X&quot;)
+ 29     y = tf.placeholder(tf.int64, shape=(None), name=&quot;y&quot;)
+ 30 
+ 31 #    with tf.name_scope(&quot;dnn&quot;):
+ 32 #        hidden1 = neuron_layer(X, n_hidden1, &quot;hidden1&quot;, activation=&quot;relu&quot;)
+ 33 #        hidden2 = neuron_layer(hidden1, n_hidden2, &quot;hidden2&quot;, activation=&quot;relu&quot;)
+ 34 #        logits = neuron_layer(hidden2, n_outputs, &quot;outputs&quot;)
+ 35     # define neural network model
+ 36     with tf.name_scope(&quot;dnn&quot;):
+ 37         hidden1 = fully_connected(X, n_hidden1, scope=&quot;hidden1&quot;)
+ 38         hidden2 = fully_connected(hidden1, n_hidden2, scope=&quot;hidden2&quot;)
+ 39         logits = fully_connected(hidden2, n_outputs, scope=&quot;outputs&quot;, activation_fn=None)
+ 40 
+ 41     # define cost function
+ 42     with tf.name_scope(&quot;loss&quot;):
+ 43         xentropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y, logits=logits)
+ 44         loss = tf.reduce_mean(xentropy, name=&quot;loss&quot;)
+ 45 
+ 46     # define GradientDescentOptimizer
+ 47     learning_rate = 0.01
+ 48     with tf.name_scope(&quot;train&quot;):
+ 49         optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+ 50         training_op = optimizer.minimize(loss)
+ 51 
+ 52     # evaluate the model
+ 53     with tf.name_scope(&quot;eval&quot;):
+ 54         correct = tf.nn.in_top_k(logits, y, 1)
+ 55         accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
+ 56 
+ 57     # initialize all variables, ant save model parameters
+ 58     init = tf.global_variables_initializer()
+ 59     saver = tf.train.Saver()
+
+ 61     # load data
+ 62     from tensorflow.examples.tutorials.mnist import input_data
+ 63     mnist = input_data.read_data_sets(&quot;/tmp/data/&quot;)
+ 64 
+ 65     n_epochs = 400
+ 66     batch_size = 50
+ 67 
+ 68     # start train the model
+ 69     with tf.Session() as sess:
+ 70         init.run()
+ 71         for epoch in range(n_epochs):
+ 72             for iteration in range(mnist.train.num_examples // batch_size):
+ 73                 X_batch, y_batch = mnist.train.next_batch(batch_size)
+ 74                 sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
+ 75             acc_train = accuracy.eval(feed_dict={X: X_batch, y: y_batch})
+ 76             acc_test = accuracy.eval(feed_dict={X: mnist.test.images,y: mnist.test.labels})
+ 77             print(epoch, &quot;Train accuracy:&quot;, acc_train, &quot;Test accuracy:&quot;, acc_test)
+ 78         save_path = saver.save(sess, &quot;./my_model_final.ckpt&quot;)
+```
+
+!!! Fine-Tuning Neural Network Hyperparameters
+
+randomized search
+
+Another option is to use a tool such as `Oscar`, which implements more complex algorithms to help you find a good set of hyperparameters quickly.
+
+
+!!! Activation Functions
+
+
+```
+ReLU: hidden layers
+Softmax: output layer
+```
+</pre>
+</div>
+<div created="20180412024228117" modified="20180412024242284" tags="TableOfContents" title="TfBasis">
+<pre></pre>
+</div>
 <div created="20180203052044921" modified="20180203063040272" tags="Python" title="Useful Functions">
 <pre>!! top count of elements
 !!! collections.Counter
@@ -9303,6 +9567,9 @@ print(tz_counts)
 ```
 
 </pre>
+</div>
+<div created="20180412105417097" modified="20180412105742662" tags="ANN" title="vanishing gradients problem">
+<pre></pre>
 </div>
 
 </div>
