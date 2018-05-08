@@ -220,6 +220,10 @@ Error message and password prompt
 
 <li>Python</li>
 
+<li>Questions（1-18）</li>
+
+<li>Questions（19）</li>
+
 <li>Require data with open APIs</li>
 
 <li>Supervised Learning</li>
@@ -8485,8 +8489,8 @@ Error message and password prompt
 <div created="20170724033201752" modified="20180203051957229" title="$:/state/tab/sidebar--1835078512">
 <pre>TableOfContents</pre>
 </div>
-<div created="20180412103911237" modified="20180412103911237" title="$:/state/toc/TableOfContents-ANN--81657105">
-<pre>open</pre>
+<div created="20180412103911237" modified="20180508021236476" title="$:/state/toc/TableOfContents-ANN--81657105">
+<pre>close</pre>
 </div>
 <div created="20180412022845279" modified="20180412024225293" title="$:/state/toc/TableOfContents-Install--81657105">
 <pre>close</pre>
@@ -8512,7 +8516,7 @@ Error message and password prompt
 <div created="20180203064155874" modified="20180203064155874" title="$:/state/toc/TableOfContents/Python-Pandas--81657105">
 <pre>open</pre>
 </div>
-<div list="[[exploding gradients]] [[vanishing gradients problem]] [[TF procedure]] Importance" title="$:/StoryList">
+<div list="Questions（19） Questions（1-18） Importance" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20170724033135400" modified="20170724033135400" title="$:/temp/advancedsearch">
@@ -8531,7 +8535,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///C:/Users/kangshaojie.ESG/Downloads/sky_ml%20(5).html&quot;
+            &quot;text&quot;: &quot;file:///D:/fightcode/sky_ml.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
@@ -8551,7 +8555,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/C:/Users/kangshaojie.ESG/Downloads/sky_ml%20(5).html&quot;
+            &quot;text&quot;: &quot;/D:/fightcode/sky_ml.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -9417,6 +9421,161 @@ http://blog.csdn.net/yanqingan/article/details/6125812?reload</pre>
 <div created="20180203052016774" modified="20180203052023717" tags="TableOfContents" title="Python">
 <pre></pre>
 </div>
+<div created="20180508021238741" modified="20180508070459626" tags="[[Supervised Learning]]" title="Questions（1-18）">
+<pre>https://blog.csdn.net/baidu_26408419/article/details/78150148
+
+1.请简要介绍下SVM
+
+2.请简要介绍下tensorflow的计算图
+
+3.在k-means或kNN，我们常用欧氏距离来计算最近的邻居之间的距离，有时也用曼哈顿距离，请对比下这两种距离的差别
+
+4.编辑距离、夹角余弦、相关系数（皮尔逊系数）
+
+协方差/标准差
+
+5.auc
+
+6.LR原理、迭代公式
+
+https://blog.csdn.net/cyh_24/article/details/50359055
+
+梯度下降法
+
+7.最大熵模型
+
+```
+逻辑回归跟最大熵模型没有本质区别。逻辑回归是最大熵对应类别为二类时的特殊情况
+
+指数簇分布的最大熵等价于其指数形式的最大似然。
+
+二项式分布的最大熵解等价于二项式指数形式(sigmoid)的最大似然； 
+多项式分布的最大熵等价于多项式分布指数形式(softmax)的最大似然。
+```
+
+8.overfitting怎么处理
+
+data augmention、dropout、regularization、batch normalizatin
+
+9.LR和SVM的联系与区别
+
+
+```
+a) 从目标函数来看，区别在于逻辑回归采用的是logistical loss，SVM采用的是hinge loss，这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。 
+b) SVM的处理方法是只考虑support vectors，也就是和分类最相关的少数点，去学习分类器。而逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。 
+c) 逻辑回归相对来说模型更简单，好理解，特别是大规模线性分类时比较方便。而SVM的理解和优化相对来说复杂一些，SVM转化为对偶问题后,分类只需要计算与少数几个支持向量的距离,这个在进行复杂核函数计算时优势很明显,能够大大简化模型和计算。 
+d) logic 能做的 svm能做，但可能在准确率上有问题，svm能做的logic有的做不了。
+```
+
+10.lightGBM与xgboost与gbdt的区别
+
+https://www.cnblogs.com/mata123/p/7440774.html
+
+11. L1和L2
+
+
+```
+L1范数可以使权值稀疏，方便特征提取。 
+L2范数可以防止过拟合，提升模型的泛化能力。
+```
+
+
+12.CNN最成功的应用是在CV，那为什么NLP和Speech的很多问题也可以用CNN解出来？为什么AlphaGo里也用了CNN？这几个不相关的问题的相似性在哪里？CNN通过什么手段抓住了这个共性？
+
+* 都存在局部与整体的关系，由低层次的特征经过组合，组成高层次的特征，并且得到不同特征之间的空间相关性。如下图：低层次的直线／曲线等特征，组合成为不同的形状，最后得到汽车的表示
+
+N-gram是直接统计不同的N个词之间组合在一起的概率，CNN是通过学习得到不同词组合的每个kernel的权重，加权和来达到某种分类或者其他目的。
+
+13.说一下Adaboost，权值更新公式
+
+14.LSTM结构推导，为什么比RNN好
+
+15.CNN与RNN
+
+```
+CNN由于其卷积的功能对句子的整体结构有一个总揽的能力，但在长句长时，CNN只能处理其窗口内的信息，相邻窗口的信息只能借助后一层的卷积层来达到信息的融合，这对卷积窗口和移动的步长等等参数依赖是很大的，因此CNN处理NLP任务实际上是建模容易、调参难的一个特点
+```
+
+''16.请大致对比下plsa和LDA的区别''
+
+```
+对于生成过程：对于PLSA, 生成过程中当选取一篇文档后，该文档的主题分布是确定的，即该文档中每个主题出现的概率是一定的，然而LDA中是不确定的，在选取之前需要利用狄利克雷先验随机确定出主题和词分布。然后再进行其他步骤。
+```
+
+17.请简要说说EM算法
+
+```
+有时候因为样本的产生和隐含变量有关（隐含变量是不能观察的），而求模型的参数时一般采用最大似然估计，由于含有了隐含变量，所以对似然函数参数求导是求不出来的，这时可以采用EM算法来求模型的参数的（对应模型参数个数可能有多个），EM算法一般分为2步：
+
+　　E步：选取一组参数，求出在该参数下隐含变量的条件概率值；
+
+　　M步：结合E步求出的隐含变量条件概率，求出似然函数下界函数（本质上是某个期望函数）的最大值。
+```
+
+18.请简要说说一个完整机器学习项目的流程
+
+```
+1 抽象成数学问题
+明确问题是进行机器学习的第一步。机器学习的训练过程通常都是一件非常耗时的事情，胡乱尝试时间成本是非常高的。
+这里的抽象成数学问题，指的我们明确我们可以获得什么样的数据，目标是一个分类还是回归或者是聚类的问题，如果都不是的话，如果划归为其中的某类问题。
+
+2 获取数据
+数据决定了机器学习结果的上限，而算法只是尽可能逼近这个上限。
+数据要有代表性，否则必然会过拟合。
+而且对于分类问题，数据偏斜不能过于严重，不同类别的数据数量不要有数个数量级的差距。
+而且还要对数据的量级有一个评估，多少个样本，多少个特征，可以估算出其对内存的消耗程度，判断训练过程中内存是否能够放得下。如果放不下就得考虑改进算法或者使用一些降维的技巧了。如果数据量实在太大，那就要考虑分布式了。
+
+3 特征预处理与特征选择
+良好的数据要能够提取出良好的特征才能真正发挥效力。
+特征预处理、数据清洗是很关键的步骤，往往能够使得算法的效果和性能得到显著提高。归一化、离散化、因子化、缺失值处理、去除共线性等，数据挖掘过程中很多时间就花在它们上面。这些工作简单可复制，收益稳定可预期，是机器学习的基础必备步骤。
+筛选出显著特征、摒弃非显著特征，需要机器学习工程师反复理解业务。这对很多结果有决定性的影响。特征选择好了，非常简单的算法也能得出良好、稳定的结果。这需要运用特征有效性分析的相关技术，如相关系数、卡方检验、平均互信息、条件熵、后验概率、逻辑回归权重等方法。
+
+4 训练模型与调优
+直到这一步才用到我们上面说的算法进行训练。现在很多算法都能够封装成黑盒供人使用。但是真正考验水平的是调整这些算法的（超）参数，使得结果变得更加优良。这需要我们对算法的原理有深入的理解。理解越深入，就越能发现问题的症结，提出良好的调优方案。
+
+5 模型诊断
+如何确定模型调优的方向与思路呢？这就需要对模型进行诊断的技术。
+过拟合、欠拟合 判断是模型诊断中至关重要的一步。常见的方法如交叉验证，绘制学习曲线等。过拟合的基本调优思路是增加数据量，降低模型复杂度。欠拟合的基本调优思路是提高特征数量和质量，增加模型复杂度。
+误差分析 也是机器学习至关重要的步骤。通过观察误差样本，全面分析误差产生误差的原因:是参数的问题还是算法选择的问题，是特征的问题还是数据本身的问题……
+诊断后的模型需要进行调优，调优后的新模型需要重新进行诊断，这是一个反复迭代不断逼近的过程，需要不断地尝试， 进而达到最优状态。
+
+6 模型融合
+一般来说，模型融合后都能使得效果有一定提升。而且效果很好。
+工程上，主要提升算法准确度的方法是分别在模型的前端（特征清洗和预处理，不同的采样模式）与后端（模型融合）上下功夫。因为他们比较标准可复制，效果比较稳定。而直接调参的工作不会很多，毕竟大量数据训练起来太慢了，而且效果难以保证。
+
+7 上线运行
+这一部分内容主要跟工程实现的相关性比较大。工程上是结果导向，模型在线上运行的效果直接决定模型的成败。 不单纯包括其准确程度、误差等情况，还包括其运行的速度(时间复杂度)、资源消耗程度（空间复杂度）、稳定性是否可接受。
+这些工作流程主要是工程实践上总结出的一些经验。并不是每个项目都包含完整的一个流程。这里的部分只是一个指导性的说明，只有大家自己多实践，多积累项目经验，才会有自己更深刻的认识。
+```
+</pre>
+</div>
+<div created="20180508072124775" modified="20180508074942111" tags="[[Supervised Learning]]" title="Questions（19）">
+<pre>19.AUC
+
+
+```
+AUC的物理意义为任取一对例和负例，正例得分大于负例得分的概率，AUC越大，表明方法效果越好。
+```
+
+20.说下红黑树的五个性质
+
+```
+红黑树虽然本质上是一棵二叉查找树，但它在二叉查找树的基础上增加了着色和相关的性质使得红黑树相对平衡，从而保证了红黑树的查找、插入、删除的时间复杂度最坏为O(log n)。
+但它是如何保证一棵n个结点的红黑树的高度始终保持在logn的呢？这就引出了红黑树的5个性质：
+每个结点要么是红的要么是黑的。  
+根结点是黑的。  
+每个叶结点（叶结点即指树尾端NIL指针或NULL结点）都是黑的。  
+如果一个结点是红的，那么它的两个儿子都是黑的。  
+ 对于任意结点而言，其到叶结点树尾端NIL指针的每条路径都包含相同数目的黑结点。 
+正是红黑树的这5条性质，使一棵n个结点的红黑树始终保持了logn的高度，从而也就解释了上面所说的“红黑树的查找、插入、删除的时间复杂度最坏为O(log n)”这一结论成立的原因
+```
+
+21.简单说下sigmoid激活函数
+
+22.生成对抗网络
+
+</pre>
+</div>
 <div created="20170725020902877" modified="20180203050859960" tags="Introduction" title="Require data with open APIs">
 <pre>!! Here are some of the web sites with open APIs
 
@@ -9466,7 +9625,6 @@ NSFG）项目，该项目是为了收集美国人的“家庭生活、婚姻状�
 </div>
 <div created="20180412103915164" modified="20180412105057014" tags="ANN" title="TF procedure">
 <pre>
-
 ```
  21 def main():
  22     n_inputs = 28*28
