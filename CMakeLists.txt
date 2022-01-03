@@ -4,4 +4,4 @@ project(fightcode)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(fightcode
-        ArrowOffer/find_in_sorted_matrix.cpp)
+        ArrowOffer/edit_distance.cpp)
